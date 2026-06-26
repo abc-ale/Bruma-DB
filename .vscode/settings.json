@@ -1,0 +1,8 @@
+{
+  "java.configuration.updateBuildConfiguration": "automatic",
+  "java.compile.nullAnalysis.mode": "disabled",
+  "editor.formatOnSave": false,
+  "[java]": {
+    "editor.defaultFormatter": "redhat.java"
+  }
+}

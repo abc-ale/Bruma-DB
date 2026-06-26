@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>BRUMA Cafetería  Iniciar Sesión</title>
+  <style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  min-height: 100vh;
+  /* Fondo cambiado al color Crema de la paleta */
+  background: #F5F1E9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Círculos decorativos de fondo usando el Verde claro con opacidad para un estilo orgánico sutil */
+body::before {
+  content: '';
+  position: absolute;
+  top: -150px;
+  right: -150px;
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(191, 217, 195, 0.4) 0%, transparent 70%);
+}
+
+body::after {
+  content: '';
+  position: absolute;
+  bottom: -100px;
+  left: -100px;
+  width: 400px;
+  height: 400px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(191, 217, 195, 0.2) 0%, transparent 70%);
+}
+
+.login-wrapper {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 420px;
+  padding: 1rem;
+}
+
+/* Tarjeta principal usando Verde oscuro (Principal) con opacidad y la Sombra card exacta (rgba 0,0,0,0.2) */
+.login-card {
+  background: rgba(38, 56, 46, 0.95);
+  border: 1px solid #BFD9C3; /* Borde en Verde claro */
+  border-radius: 20px;
+  padding: 2.5rem 2rem;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(191, 217, 195, 0.1);
+}
+
+/* Logo */
+.logo-area {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.logo-icon {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: #BFD9C3; /* Verde claro (Hover / Acento) */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.2rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.logo-area h1 {
+  font-size: 1.9rem;
+  font-weight: 800;
+  color: #2C1B0E; /* Café oscuro (Texto h1) para máximo contraste y legibilidad */
+  letter-spacing: 2px;
+}
+
+.logo-area p {
+  color: #4E342E; /* Marrón cálido (Texto párrafos) */
+  font-size: .9rem;
+  margin-top: .3rem;
+}
+
+/* Alertas adaptadas con la nueva paleta de errores/éxitos refinados */
+.alert {
+  padding: .8rem 1rem;
+  border-radius: 10px;
+  margin-bottom: 1.2rem;
+  font-size: .88rem;
+  text-align: center;
+  font-weight: 500;
+}
+
+.alert-error {
+  background: rgba(200, 90, 84, 0.2);
+  color: #EDE5E1; /* Blanco cálido */
+  border: 1px solid rgba(200, 90, 84, 0.4);
+}
+
+.alert-ok {
+  background: rgba(191, 217, 195, 0.2);
+  color: #BFD9C3; /* Verde claro */
+  border: 1px solid rgba(191, 217, 195, 0.4);
+}
+
+/* Separador de sección */
+.section-label {
+  font-size: .78rem;
+  font-weight: 700;
+  color: #BFD9C3; /* Verde claro */
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  margin-bottom: .5rem;
+}
+
+/* Inputs y Formularios */
+.field {
+  margin-bottom: 1.2rem;
+}
+
+.field label {
+  display: block;
+  margin-bottom: .5rem;
+  color: #BFD9C3; /* Etiquetas en Verde claro sobre el fondo oscuro de la card */
+}
+
+.input-wrap {
+  position: relative;
+}
+
+.input-wrap .ico {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1rem;
+  color: #EDE5E1; /* Blanco cálido para los iconos */
+  pointer-events: none;
+}
+
+.input-wrap input {
+  width: 100%;
+  padding: .75rem .9rem .75rem 2.6rem;
+  background: rgba(0, 0, 0, 0.2); /* Sombra card de fondo para contraste interno */
+  border: 1.5px solid #E8D5C4; /* Crema cálida (Borde logo) */
+  border-radius: 10px;
+  color: #EDE5E1; /* Blanco cálido (Texto cards) */
+  font-size: .95rem;
+  outline: none;
+  transition: border-color .25s, box-shadow .25s;
+}
+
+.input-wrap input:focus {
+  border-color: #BFD9C3; /* Cambia a Verde claro en Focus */
+  box-shadow: 0 0 0 3px rgba(191, 217, 195, 0.2);
+}
+
+.input-wrap input::placeholder {
+  color: #EDE5E1;
+  opacity: 0.5;
+}
+
+/* Botón de Login utilizando Crema cálida y Hover en Verde claro */
+.btn-login {
+  width: 100%;
+  padding: .85rem;
+  background: #E8D5C4; /* Crema cálida */
+  color: #2C1B0E; /* Café oscuro (Texto h1) para excelente lectura */
+  font-size: 1rem;
+  font-weight: 800;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  letter-spacing: .05em;
+  transition: background .2s, transform .1s;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  margin-top: .5rem;
+}
+
+.btn-login:hover {
+  background: #BFD9C3; /* Cambia a Verde claro al pasar el cursor */
+}
+
+.btn-login:active {
+  transform: scale(.98);
+}
+
+/* Credenciales de demostración */
+.creds {
+  margin-top: 1.8rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1); /* Línea footer exacta (rgba 255,255,255,0.1) */
+  padding-top: 1.4rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: .8rem;
+}
+
+.cred-card {
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(191, 217, 195, 0.2);
+  border-radius: 10px;
+  padding: .8rem;
+}
+
+.cred-card .role {
+  font-size: .7rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  margin-bottom: .4rem;
+}
+
+.cred-card.admin .role {
+  color: #E8D5C4; /* Crema cálida */
+}
+
+.cred-card.cajero .role {
+  color: #BFD9C3; /* Verde claro */
+}
+
+.cred-card code {
+  display: block;
+  font-size: .82rem;
+  color: #EDE5E1; /* Blanco cálido (Texto cards) */
+  line-height: 1.6;
+  font-family: 'Courier New', monospace;
+}
+
+.footer-txt {
+  text-align: center;
+  color: #4E342E; /* Marrón cálido (Texto párrafos) */
+  font-size: .78rem;
+  margin-top: 1.5rem;
+}
+  </style>
+</head>
+<body>
+<div class="login-wrapper">
+  <div class="login-card">
+
+    <!-- Logo -->
+    <div class="logo-area">
+      <div class="logo-icon"></div>
+      <h1>BRUMA</h1>
+      <p>Sistema de Gestión · Cafetería</p>
+    </div>
+
+    <!-- Alertas -->
+    <!--
+      SOLUCIÓN 1 — THYMELEAF:
+      param.error evalúa si el parámetro 'error' está presente en la URL (/login?error=true).
+      Es diferente a ${error}: ese busca una variable en el Model que Spring Security
+      nunca inyecta. Con param.error funciona sin tocar el controlador.
+    -->
+    <div class="alert alert-error"
+         th:if="${param.error}"
+         id="alertaError">
+      ⚠ Usuario o contraseña incorrectos. Intenta de nuevo.
+    </div>
+
+    <!--
+      SOLUCIÓN 2 — JAVASCRIPT (respaldo por si Thymeleaf no evalúa param.error):
+      URLSearchParams detecta 'error' en la URL y hace visible el div oculto.
+      El div empieza oculto con display:none y JS lo muestra si corresponde.
+    -->
+    <div class="alert alert-error"
+         id="alertaErrorJs"
+         style="display:none">
+      ⚠ Usuario o contraseña incorrectos. Intenta de nuevo.
+    </div>
+
+    <div class="alert alert-ok"
+         th:if="${param.logout}">
+      ✓ Sesión cerrada correctamente.
+    </div>
+
+    <!-- Formulario -->
+    <form th:action="@{/login}" method="post">
+      <div class="field">
+        <label class="section-label">Usuario</label>
+        <div class="input-wrap">
+          <span class="ico"></span>
+          <input type="text" name="username" placeholder="tu usuario" required autofocus/>
+        </div>
+      </div>
+      <div class="field">
+        <label class="section-label">Contraseña</label>
+        <div class="input-wrap">
+          <span class="ico"></span>
+          <input type="password" name="password" placeholder="tu contraseña" required/>
+        </div>
+      </div>
+      <button class="btn-login" type="submit">Ingresar</button>
+    </form>
+
+    <!-- Credenciales de prueba -->
+    <div class="creds">
+      <div class="cred-card admin">
+        <div class="role">Administrador</div>
+        <code>usuario: admin<br>clave: admin123</code>
+      </div>
+      <div class="cred-card cajero">
+        <div class="role">Cajero</div>
+        <code>usuario: cajero<br>clave: cajero123</code>
+      </div>
+    </div>
+
+    <p class="footer-txt">BRUMA Cafetería © 2025</p>
+  </div>
+</div>
+
+<script>
+  // SOLUCIÓN 2 — JavaScript puro con URLSearchParams
+  // Si Thymeleaf ya mostró el div de Thymeleaf (alertaError), el de JS no se necesita.
+  // Si por algún motivo el servidor no procesa Thymeleaf correctamente, JS actúa como respaldo.
+  (function () {
+    const params  = new URLSearchParams(window.location.search);
+    const divTh   = document.getElementById('alertaError');
+    const divJs   = document.getElementById('alertaErrorJs');
+
+    if (params.has('error')) {
+      // Si Thymeleaf ya lo mostró, el div de JS se queda oculto (no duplicar)
+      if (!divTh || divTh.style.display === 'none' || getComputedStyle(divTh).display === 'none') {
+        divJs.style.display = 'block';
+      }
+    }
+
+    if (params.has('logout') && divJs) {
+      // Limpiar el parámetro de la URL sin recargar la página (historial limpio)
+      history.replaceState(null, '', window.location.pathname);
+    }
+  })();
+</script>
+
+</body>
+</html>

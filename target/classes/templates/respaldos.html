@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Respaldos — BRUMA</title>
+  <style>
+:root {
+  --verde-oscuro:  #26382E;
+  --crema:         #F5F1E9;
+  --verde-claro:   #BFD9C3;
+  --cafe-oscuro:   #2C1B0E;
+  --marron:        #4E342E;
+  --crema-calida:  #E8D5C4;
+  --blanco-calido: #EDE5E1;
+  --overlay:       rgba(0,0,0,0.6);
+  --sombra:        rgba(0,0,0,0.2);
+  --linea-footer:  rgba(255,255,255,0.1);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: var(--crema);
+  color: var(--cafe-oscuro);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+/* NAV */
+nav {
+  background: var(--verde-oscuro);
+  border-bottom: 3px solid var(--verde-claro);
+  padding: 0 2rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  height: 68px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 4px 16px var(--sombra);
+}
+.brand {
+  font-size: 1.4rem;
+  font-weight: 900;
+  color: var(--crema);
+  text-decoration: none;
+  margin-right: auto;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+.brand span { color: var(--verde-claro); }
+nav a {
+  color: var(--blanco-calido);
+  text-decoration: none;
+  padding: .45rem 1rem;
+  border-radius: 6px;
+  font-size: .9rem;
+  font-weight: 500;
+  transition: all .25s;
+  border: 1px solid transparent;
+}
+nav a:hover, nav a.active {
+  background: var(--verde-claro);
+  color: var(--verde-oscuro);
+  font-weight: 700;
+  border-color: var(--verde-claro);
+}
+.btn-logout {
+  background: transparent;
+  border: 1px solid rgba(237,229,225,.4);
+  color: var(--blanco-calido);
+  padding: .4rem 1rem;
+  border-radius: 6px;
+  font-size: .85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all .25s;
+}
+.btn-logout:hover {
+  background: rgba(237,229,225,.15);
+  border-color: var(--blanco-calido);
+}
+/* LAYOUT */
+.container { max-width: 1100px; margin: 0 auto; padding: 2rem 1.5rem; flex: 1; }
+h1 { font-size: 1.8rem; color: var(--verde-oscuro); margin-bottom: .4rem; }
+.subtitulo { color: #666; font-size: .95rem; margin-bottom: 2rem; }
+
+/* ALERTAS */
+.alerta {
+  padding: 1rem 1.4rem;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: .8rem;
+}
+.alerta-ok    { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+.alerta-error { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+
+/* CARDS DE ACCIÓN */
+.acciones {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+  gap: 1.2rem;
+  margin-bottom: 2.5rem;
+}
+.card-accion {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 10px var(--sombra);
+  border-top: 4px solid var(--verde-claro);
+  display: flex;
+  flex-direction: column;
+  gap: .8rem;
+}
+.card-accion h3 { font-size: 1rem; color: var(--verde-oscuro); }
+.card-accion p  { font-size: .85rem; color: #666; line-height: 1.5; }
+.badge-auto {
+  display: inline-block;
+  background: #e8f5e9;
+  color: #2e7d32;
+  border-radius: 12px;
+  padding: .15rem .7rem;
+  font-size: .75rem;
+  font-weight: 700;
+}
+
+/* BOTONES */
+.btn {
+  display: inline-block;
+  padding: .55rem 1.2rem;
+  border-radius: 7px;
+  font-size: .88rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: all .2s;
+  text-align: center;
+  text-decoration: none;
+}
+.btn-verde  { background: var(--verde-oscuro); color: var(--crema); }
+.btn-verde:hover  { background: #1a2b20; }
+.btn-azul   { background: #1565c0; color: white; }
+.btn-azul:hover   { background: #0d47a1; }
+.btn-rojo   { background: #c62828; color: white; }
+.btn-rojo:hover   { background: #b71c1c; }
+.btn-sm { padding: .35rem .8rem; font-size: .8rem; }
+
+/* TABLA HISTORIAL */
+.seccion-titulo {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--verde-oscuro);
+  margin-bottom: 1rem;
+  padding-bottom: .5rem;
+  border-bottom: 2px solid var(--verde-claro);
+}
+.tabla-wrap { overflow-x: auto; }
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px var(--sombra);
+}
+thead { background: var(--verde-oscuro); color: var(--crema); }
+thead th { padding: .85rem 1rem; text-align: left; font-size: .88rem; font-weight: 600; }
+tbody tr { border-bottom: 1px solid #f0ebe5; transition: background .15s; }
+tbody tr:hover { background: #faf6f0; }
+tbody td { padding: .8rem 1rem; font-size: .88rem; }
+
+/* BADGES */
+.badge {
+  display: inline-block;
+  padding: .25rem .7rem;
+  border-radius: 12px;
+  font-size: .76rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .4px;
+}
+.badge-pg      { background: #e3f2fd; color: #1565c0; }
+.badge-mongo   { background: #e8f5e9; color: #2e7d32; }
+.badge-full    { background: #f3e5f5; color: #6a1b9a; }
+.badge-ok      { background: #e8f5e9; color: #2e7d32; }
+.badge-error   { background: #ffebee; color: #c62828; }
+.badge-manual  { background: #fff3e0; color: #e65100; }
+.badge-auto    { background: #e8eaf6; color: #283593; }
+
+/* VACÍO */
+.vacio {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: #999;
+}
+.vacio-icono { font-size: 3rem; margin-bottom: 1rem; }
+
+/* INFO SCHEDULE */
+.info-schedule {
+  background: #e8f5e9;
+  border: 1px solid #c8e6c9;
+  border-radius: 10px;
+  padding: 1.2rem 1.5rem;
+  margin-bottom: 2rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+.info-schedule .icono { font-size: 1.8rem; }
+.info-schedule h4 { color: #2e7d32; margin-bottom: .3rem; }
+.info-schedule p  { font-size: .85rem; color: #444; line-height: 1.6; }
+
+footer {
+  background: var(--verde-oscuro);
+  color: rgba(255,255,255,.5);
+  text-align: center;
+  padding: 1.2rem;
+  font-size: .82rem;
+  margin-top: auto;
+  border-top: 1px solid var(--linea-footer);
+}
+@media (max-width: 700px) {
+  nav { padding: 0 1rem; gap: .4rem; height: auto; flex-wrap: wrap; padding-block: .6rem; }
+  .acciones { grid-template-columns: 1fr; }
+}
+  </style>
+</head>
+<body>
+
+<!-- ── NAV ─────────────────────────────────────────────────── -->
+<nav>
+  <a class="brand" th:href="@{/}">BRUMA</a>
+  <a th:href="@{/}">Dashboard</a>
+  <a th:href="@{/clientes}"  sec:authorize="hasRole('ADMIN')">Clientes</a>
+  <a th:href="@{/productos}">Productos</a>
+  <a th:href="@{/pedidos}">Pedidos</a>
+  <a th:href="@{/reportes}"  sec:authorize="hasRole('ADMIN')">Reportes</a>
+  <a th:href="@{/respaldos}" sec:authorize="hasRole('ADMIN')" class="active">Respaldos</a>
+  <a th:href="@{/usuarios/nuevo}" sec:authorize="hasRole('ADMIN')">Usuarios</a>
+  <form th:action="@{/logout}" method="post" style="display:inline">
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+    <button type="submit" class="btn-logout">Salir</button>
+  </form>
+</nav>
+
+<!-- ── CONTENIDO ───────────────────────────────────────────── -->
+<div class="container">
+
+  <h1>🗄 Respaldos Periódicos</h1>
+  <p class="subtitulo">
+    Gestiona y descarga los respaldos de PostgreSQL y MongoDB. Los respaldos automáticos
+    se ejecutan diariamente a las 02:00 AM y semanalmente los lunes a las 03:00 AM.
+  </p>
+
+  <!-- Alertas flash -->
+  <div class="alerta alerta-ok" th:if="${mensajeOk}">
+    <span>✔</span>
+    <span th:text="${mensajeOk}"></span>
+  </div>
+  <div class="alerta alerta-error" th:if="${mensajeError}">
+    <span>✖</span>
+    <span th:text="${mensajeError}"></span>
+  </div>
+
+  <!-- Info schedule -->
+  <div class="info-schedule">
+    <div>
+      <h4>Respaldos Automáticos Activos</h4>
+      <p>
+        <strong>Diario:</strong> todos los días a las 02:00 AM &nbsp;|&nbsp;
+        <strong>Semanal:</strong> lunes a las 03:00 AM &nbsp;|&nbsp;
+        <strong>Retención:</strong> últimos 30 respaldos (los más antiguos se eliminan automáticamente)
+      </p>
+    </div>
+  </div>
+
+  <!-- ── Acciones manuales ─────────────────────────────────── -->
+  <div class="acciones">
+
+    <div class="card-accion">
+      <h3>Respaldo PostgreSQL</h3>
+      <p>Exporta clientes, productos, pedidos y usuarios de Supabase a un archivo JSON.</p>
+      <form th:action="@{/respaldos/ejecutar/postgres}" method="post">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+        <button type="submit" class="btn btn-verde">Generar ahora</button>
+      </form>
+    </div>
+
+    <div class="card-accion">
+      <h3>Respaldo MongoDB</h3>
+      <p>Exporta los perfiles de clientes (preferencias y comentarios) de MongoDB Atlas.</p>
+      <form th:action="@{/respaldos/ejecutar/mongo}" method="post">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+        <button type="submit" class="btn btn-verde">Generar ahora</button>
+      </form>
+    </div>
+
+    <div class="card-accion">
+      <h3>Respaldo Completo</h3>
+      <p>Genera ambos respaldos (PostgreSQL + MongoDB) en una sola operación.</p>
+      <span class="badge-auto">Recomendado</span>
+      <form th:action="@{/respaldos/ejecutar/completo}" method="post">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+        <button type="submit" class="btn btn-azul">Generar ahora</button>
+      </form>
+    </div>
+
+  </div>
+
+  <!-- ── Historial ─────────────────────────────────────────── -->
+  <p class="seccion-titulo">Historial de Respaldos</p>
+
+  <div class="tabla-wrap" th:if="${not #lists.isEmpty(respaldos)}">
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Fecha y Hora</th>
+          <th>Tipo</th>
+          <th>Estado</th>
+          <th>Tamaño</th>
+          <th>Archivo</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="r, i : ${respaldos}">
+          <td th:text="${i.count}">1</td>
+          <td th:text="${r.fechaHoraFormateada}">01/01/2025 02:00:00</td>
+          <td>
+            <span th:if="${r.tipo.name() == 'POSTGRESQL'}" class="badge badge-pg">PostgreSQL</span>
+            <span th:if="${r.tipo.name() == 'MONGODB'}"    class="badge badge-mongo">MongoDB</span>
+            <span th:if="${r.tipo.name() == 'COMPLETO'}"   class="badge badge-full">Completo</span>
+          </td>
+          <td>
+            <span th:if="${r.estado.name() == 'OK'}"    class="badge badge-ok">✔ OK</span>
+            <span th:if="${r.estado.name() == 'ERROR'}" class="badge badge-error"
+                  th:title="${r.mensajeError}">✖ Error</span>
+          </td>
+          <td th:text="${r.tamanioFormateado}">12 KB</td>
+          <td th:text="${r.nombreArchivo}" style="font-family:monospace;font-size:.8rem">archivo.json</td>
+          <td>
+            <div style="display:flex;gap:.4rem;flex-wrap:wrap">
+              <!-- Descargar (solo si existe el archivo) -->
+              <a th:if="${r.estado.name() == 'OK'}"
+                 th:href="@{/respaldos/descargar/{id}(id=${r.id})}"
+                 class="btn btn-azul btn-sm">⬇ Descargar</a>
+              <!-- Eliminar -->
+              <form th:action="@{/respaldos/eliminar/{id}(id=${r.id})}" method="post"
+                    onsubmit="return confirm('¿Eliminar este respaldo?')">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                <button type="submit" class="btn btn-rojo btn-sm">🗑</button>
+              </form>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Sin respaldos -->
+  <div class="vacio" th:if="${#lists.isEmpty(respaldos)}">
+    <div class="vacio-icono">🗄</div>
+    <p>Aún no hay respaldos generados.</p>
+    <p style="margin-top:.5rem;font-size:.85rem">
+      Genera uno manualmente o espera al respaldo automático de las 02:00 AM.
+    </p>
+  </div>
+
+</div>
+
+<footer>BRUMA Cafetería © 2025</footer>
+</body>
+</html>

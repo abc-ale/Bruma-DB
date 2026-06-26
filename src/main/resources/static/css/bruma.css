@@ -1,0 +1,698 @@
+/* ═══════════════════════════════════════════════════════════════════════════════
+   BRUMA Cafetería — Sistema de Gestión Dual DB
+   Tema: Paleta Café Elegante
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+:root {
+  --bruma-cafe: #4a2c2a;
+  --bruma-espresso: #2d1b1a;
+  --bruma-crema: #f5e6c8;
+  --bruma-latte: #c8a97e;
+  --bruma-niebla: #e8e0d5;
+  --bruma-texto: #2d1b1a;
+  --bruma-acento: #8b4513;
+  
+  /* Acentos complementarios */
+  --bruma-exito: #6b9d6b;
+  --bruma-error: #c85a54;
+  --bruma-info: #7b9dbe;
+  --bruma-advertencia: #d4a574;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────── */
+/* RESET Y BASE */
+/* ─────────────────────────────────────────────────────────────────────────── */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, var(--bruma-espresso) 0%, var(--bruma-cafe) 100%);
+  color: var(--bruma-texto);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────── */
+/* NAVEGACIÓN */
+/* ─────────────────────────────────────────────────────────────────────────── */
+
+nav {
+  background: linear-gradient(90deg, var(--bruma-espresso), var(--bruma-cafe));
+  border-bottom: 3px solid var(--bruma-latte);
+  padding: 0 2rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  height: 70px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.brand {
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: var(--bruma-latte);
+  text-decoration: none;
+  margin-right: auto;
+  letter-spacing: 2px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.brand span {
+  color: var(--bruma-crema);
+}
+
+nav a {
+  color: var(--bruma-niebla);
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+
+nav a:hover,
+nav a.active {
+  background: var(--bruma-latte);
+  color: var(--bruma-espresso);
+  font-weight: 700;
+  border-color: var(--bruma-acento);
+}
+
+.user-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  background: rgba(200, 169, 126, 0.15);
+  border: 2px solid var(--bruma-latte);
+  border-radius: 25px;
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  color: var(--bruma-latte);
+  margin-left: auto;
+  font-weight: 600;
+}
+
+.role-badge {
+  display: inline-block;
+  padding: 0.3rem 0.8rem;
+  border-radius: 15px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.role-badge.admin {
+  background: rgba(139, 69, 19, 0.3);
+  color: var(--bruma-acento);
+  border: 1px solid var(--bruma-acento);
+}
+
+.role-badge.cajero {
+  background: rgba(107, 157, 107, 0.3);
+  color: var(--bruma-exito);
+  border: 1px solid var(--bruma-exito);
+}
+
+.role-badge.mesero {
+  background: rgba(100, 140, 200, 0.3);
+  color: #4a90d9;
+  border: 1px solid #4a90d9;
+}
+
+.btn-logout {
+  background: rgba(200, 85, 84, 0.15);
+  border: 2px solid var(--bruma-error);
+  color: var(--bruma-error);
+  padding: 0.4rem 1rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.btn-logout:hover {
+  background: var(--bruma-error);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(200, 85, 84, 0.3);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────── */
+/* CONTENEDOR PRINCIPAL */
+/* ─────────────────────────────────────────────────────────────────────────── */
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2.5rem 2rem;
+  flex: 1;
+}
+
+.page-hdr {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+  padding-bottom: 1.2rem;
+  border-bottom: 2px solid var(--bruma-latte);
+}
+
+.page-hdr h1 {
+  font-size: 2rem;
+  color: var(--bruma-acento);
+  font-weight: 800;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────── */
+/* TARJETAS (KPIs) */
+/* ─────────────────────────────────────────────────────────────────────────── */
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.card {
+  background: linear-gradient(135deg, var(--bruma-niebla), var(--bruma-crema));
+  border: 2px solid var(--bruma-latte);
+  border-radius: 16px;
+  padding: 1.8rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 30px rgba(139, 69, 19, 0.2);
+  border-color: var(--bruma-acento);
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--bruma-latte), var(--bruma-acento));
+}
+
+.card .num {
+  font-size: 2.8rem;
+  font-weight: 900;
+  color: var(--bruma-acento);
+  line-height: 1;
+  margin: 0.5rem 0;
+}
+
+.card .lbl {
+  color: var(--bruma-texto);
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-top: 0.8rem;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────── */
+/* TABLAS */
+/* ─────────────────────────────────────────────────────────────────────────── */
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--bruma-crema);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.tbl-wrap {
+  overflow-x: auto;
+  border-radius: 12px;
+  border: 2px solid var(--bruma-latte);
+}
+
+thead tr {
+  background: linear-gradient(90deg, var(--bruma-espresso), var(--bruma-cafe));
+}
+
+th {
+  padding: 1rem 1.2rem;
+  text-align: left;
+  color: var(--bruma-crema);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 700;
+}
+
+td {
+  padding: 1rem 1.2rem;
+  color: var(--bruma-texto);
+  font-size: 0.95rem;
+  border-bottom: 1px solid var(--bruma-niebla);
+}
+
+tbody tr:last-child td {
+  border-bottom: none;
+}
+
+tbody tr:hover {
+  background: rgba(200, 169, 126, 0.1);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────── */
+/* BOTONES */
+/* ─────────────────────────────────────────────────────────────────────────── */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.2rem;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+}
+
+.btn-gold {
+  background: linear-gradient(135deg, var(--bruma-latte), var(--bruma-acento));
+  color: white;
+  border: 2px solid var(--bruma-acento);
+}
+
+.btn-green {
+  background: var(--bruma-exito);
+  color: white;
+  border: 2px solid var(--bruma-exito);
+}
+
+.btn-red {
+  background: var(--bruma-error);
+  color: white;
+  border: 2px solid var(--bruma-error);
+}
+
+.btn-blue {
+  background: var(--bruma-info);
+  color: white;
+  border: 2px solid var(--bruma-info);
+}
+
+.btn-sm {
+  padding: 0.4rem 0.8rem;
+  font-size: 0.8rem;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────── */
+/* FORMULARIOS */
+/* ─────────────────────────────────────────────────────────────────────────── */
+
+.form-card {
+  background: var(--bruma-crema);
+  border: 2px solid var(--bruma-latte);
+  border-radius: 16px;
+  padding: 2.2rem;
+  max-width: 550px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.form-card h3 {
+  color: var(--bruma-acento);
+  margin-bottom: 1.5rem;
+  font-size: 1.2rem;
+  font-weight: 800;
+}
+
+.fg {
+  margin-bottom: 1.3rem;
+}
+
+.fg label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: var(--bruma-texto);
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.fg input,
+.fg select,
+.fg textarea {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  background: white;
+  border: 2px solid var(--bruma-niebla);
+  border-radius: 10px;
+  color: var(--bruma-texto);
+  font-size: 0.95rem;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.fg input:focus,
+.fg select:focus,
+.fg textarea:focus {
+  border-color: var(--bruma-latte);
+  box-shadow: 0 0 0 4px rgba(200, 169, 126, 0.15);
+  background: rgba(245, 230, 200, 0.5);
+}
+
+.fg select option {
+  background: var(--bruma-crema);
+  color: var(--bruma-texto);
+}
+
+.row {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────── */
+/* BADGES Y CHIPS */
+/* ─────────────────────────────────────────────────────────────────────────── */
+
+.badge {
+  display: inline-block;
+  padding: 0.3rem 0.7rem;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.chip {
+  display: inline-block;
+  padding: 0.2rem 0.6rem;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.b-beb {
+  background: rgba(123, 157, 190, 0.2);
+  color: var(--bruma-info);
+  border: 1px solid var(--bruma-info);
+}
+
+.b-com {
+  background: rgba(107, 157, 107, 0.2);
+  color: var(--bruma-exito);
+  border: 1px solid var(--bruma-exito);
+}
+
+.b-pos {
+  background: rgba(212, 165, 116, 0.2);
+  color: var(--bruma-advertencia);
+  border: 1px solid var(--bruma-advertencia);
+}
+
+.b-otr {
+  background: rgba(200, 169, 126, 0.2);
+  color: var(--bruma-latte);
+  border: 1px solid var(--bruma-latte);
+}
+
+.b-pg {
+  background: rgba(51, 103, 145, 0.2);
+  color: #336791;
+  border: 1px solid #336791;
+}
+
+.b-mg {
+  background: rgba(71, 162, 72, 0.2);
+  color: #47A248;
+  border: 1px solid #47A248;
+}
+
+.chip-pg {
+  background: rgba(51, 103, 145, 0.2);
+  color: #336791;
+  border: 1px solid #336791;
+}
+
+.chip-mg {
+  background: rgba(71, 162, 72, 0.2);
+  color: #47A248;
+  border: 1px solid #47A248;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────── */
+/* CAJAS DE INFORMACIÓN */
+/* ─────────────────────────────────────────────────────────────────────────── */
+
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.info-box {
+  background: var(--bruma-crema);
+  border: 2px solid var(--bruma-latte);
+  border-radius: 16px;
+  padding: 1.6rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.info-box h3 {
+  color: var(--bruma-acento);
+  margin-bottom: 0.8rem;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 800;
+}
+
+.rpt-card {
+  background: var(--bruma-crema);
+  border: 2px solid var(--bruma-latte);
+  border-radius: 16px;
+  padding: 1.8rem;
+  margin-bottom: 1.8rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.rpt-card h3 {
+  color: var(--bruma-acento);
+  margin-bottom: 0.6rem;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-weight: 800;
+}
+
+.rpt-card p {
+  color: var(--bruma-texto);
+  font-size: 0.9rem;
+  margin-bottom: 1.2rem;
+  line-height: 1.6;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────── */
+/* ALERTAS */
+/* ─────────────────────────────────────────────────────────────────────────── */
+
+.alert {
+  padding: 1rem 1.4rem;
+  border-radius: 12px;
+  margin-bottom: 1.2rem;
+  font-size: 0.95rem;
+  border-left: 4px solid;
+}
+
+.alert-warn {
+  background: rgba(212, 165, 116, 0.15);
+  border-color: var(--bruma-advertencia);
+  color: var(--bruma-acento);
+}
+
+.alert-error {
+  background: rgba(200, 85, 84, 0.15);
+  border-color: var(--bruma-error);
+  color: var(--bruma-error);
+}
+
+.alert-ok {
+  background: rgba(107, 157, 107, 0.15);
+  border-color: var(--bruma-exito);
+  color: var(--bruma-exito);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────── */
+/* FLUJO DE DATOS (REPORTES) */
+/* ─────────────────────────────────────────────────────────────────────────── */
+
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-bottom: 1.8rem;
+}
+
+.flow-box {
+  background: var(--bruma-crema);
+  border-radius: 12px;
+  padding: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  border: 2px solid var(--bruma-latte);
+}
+
+.flow-item {
+  border-radius: 10px;
+  padding: 1rem;
+  background: white;
+}
+
+.flow-item-pg {
+  border-left: 4px solid #336791;
+}
+
+.flow-item-mg {
+  border-left: 4px solid #47A248;
+}
+
+.flow-item-res {
+  border-left: 4px solid var(--bruma-acento);
+}
+
+.flow-arrow {
+  text-align: center;
+  color: var(--bruma-acento);
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────── */
+/* PIE DE PÁGINA */
+/* ─────────────────────────────────────────────────────────────────────────── */
+
+footer {
+  background: linear-gradient(90deg, var(--bruma-espresso), var(--bruma-cafe));
+  border-top: 3px solid var(--bruma-latte);
+  text-align: center;
+  padding: 1.5rem;
+  color: var(--bruma-niebla);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────── */
+/* RESPONSIVE */
+/* ─────────────────────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+  .two-col {
+    grid-template-columns: 1fr;
+  }
+
+  .info-grid {
+    grid-template-columns: 1fr;
+  }
+
+  nav {
+    padding: 0 1rem;
+    gap: 0.5rem;
+    height: auto;
+    flex-wrap: wrap;
+  }
+
+  .brand {
+    font-size: 1.2rem;
+  }
+
+  nav a {
+    padding: 0.4rem 0.7rem;
+    font-size: 0.85rem;
+  }
+
+  .user-badge {
+    margin-left: 0;
+    margin-top: 0.5rem;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .page-hdr {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .container {
+    padding: 1.5rem 1rem;
+  }
+
+  .card .num {
+    font-size: 2rem;
+  }
+
+  .form-card {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .cards {
+    grid-template-columns: 1fr;
+  }
+
+  .row {
+    flex-direction: column;
+  }
+
+  .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  table {
+    font-size: 0.85rem;
+  }
+
+  th,
+  td {
+    padding: 0.7rem 0.8rem;
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "java",
+      "name": "BRUMA Cafetería",
+      "request": "launch",
+      "mainClass": "com.bruma.BrumaApplication",
+      "projectName": "bruma-cafeteria",
+      "args": "",
+      "vmArgs": "-Dfile.encoding=UTF-8"
+    }
+  ]
+}
