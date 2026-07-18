@@ -4,41 +4,102 @@
 <head>
   <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>Nuevo Pedido — BRUMA</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.44.0/dist/tabler-icons.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
-    :root{--bg-dark-green:#26382E;--bg-cream:#F5F1E9;--accent-light-green:#BFD9C3;--text-dark-coffee:#2C1B0E;--text-warm-brown:#4E342E;--border-warm-cream:#E8D5C4;--card-white-warm:#EDE5E1;--green-alert:#47A248;--red-alert:#C85A54;--blue-alert:#3B7A9E;--shadow-card:rgba(0,0,0,0.2);}
-    *{box-sizing:border-box;margin:0;padding:0}body{font-family:'Segoe UI',sans-serif;background:var(--bg-cream);color:var(--text-warm-brown);min-height:100vh;display:flex;flex-direction:column}
-    nav{background:var(--bg-dark-green);border-bottom:2px solid var(--accent-light-green);padding:0 2rem;display:flex;align-items:center;gap:.3rem;height:66px;position:sticky;top:0;z-index:100;box-shadow:0 4px 20px var(--shadow-card)}
-    .brand{font-size:1.35rem;font-weight:800;color:var(--accent-light-green);text-decoration:none;margin-right:auto;letter-spacing:1px}.brand span{color:var(--bg-cream)}
-    nav a{color:var(--card-white-warm);text-decoration:none;padding:.45rem .9rem;border-radius:8px;font-size:.88rem;font-weight:500;transition:all .2s}
-    nav a:hover,nav a.active{background:var(--accent-light-green);color:var(--bg-dark-green);font-weight:700}
-    .user-badge{display:flex;align-items:center;gap:.5rem;background:rgba(191,217,195,.15);border:1px solid rgba(191,217,195,.4);border-radius:20px;padding:.3rem .8rem;font-size:.82rem;color:var(--accent-light-green);margin-left:.5rem}
-    .btn-logout{background:rgba(200,90,84,.15);border:1px solid rgba(200,90,84,.4);color:var(--card-white-warm);padding:.35rem .8rem;border-radius:8px;font-size:.82rem;cursor:pointer;transition:all .2s}
-    .btn-logout:hover{background:var(--red-alert);color:#fff}
-    .container{max-width:820px;margin:0 auto;padding:2rem 1.5rem;flex:1}
-    .page-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.8rem;padding-bottom:.8rem;border-bottom:1px solid var(--border-warm-cream)}
-    .page-hdr h1{font-size:1.8rem;color:var(--text-dark-coffee)}
-    .btn{display:inline-flex;align-items:center;gap:.35rem;padding:.45rem 1rem;border-radius:8px;font-size:.84rem;font-weight:600;border:none;cursor:pointer;text-decoration:none;transition:all .15s}
-    .btn:hover{filter:brightness(1.05)}.btn-gold{background:var(--border-warm-cream);color:var(--text-dark-coffee)}.btn-green{background:var(--green-alert);color:#fff}.btn-red{background:var(--red-alert);color:#fff}.btn-blue{background:var(--blue-alert);color:#fff}.btn-sm{padding:.3rem .7rem;font-size:.78rem}
-    .form-card{background:var(--bg-dark-green);border:1px solid rgba(191,217,195,.25);border-radius:14px;padding:2rem;box-shadow:0 8px 30px var(--shadow-card)}
-    .section-title{color:var(--accent-light-green);font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;margin:.5rem 0 .6rem}
-    .fg{margin-bottom:1.1rem}.fg label{display:block;margin-bottom:.4rem;color:var(--accent-light-green);font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em}
-    .fg input,.fg select{width:100%;padding:.65rem .9rem;background:rgba(0,0,0,.2);border:1.5px solid var(--accent-light-green);border-radius:9px;color:var(--bg-cream);font-size:.93rem;outline:none}
-    .fg input:focus,.fg select:focus{border-color:var(--bg-cream)}.fg select option{background:var(--bg-dark-green);color:var(--bg-cream)}
-    .grid2{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
-    /* FIX 7: checks-grid para 11 comentarios */
-    .checks-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(185px,1fr));gap:.5rem;margin-bottom:1rem}
-    .check-item{display:flex;align-items:center;gap:.55rem;background:rgba(0,0,0,.15);border:1px solid rgba(191,217,195,.2);border-radius:8px;padding:.55rem .8rem;cursor:pointer;transition:background .15s}
-    .check-item:hover{background:rgba(191,217,195,.12)}.check-item input[type=checkbox]{accent-color:var(--accent-light-green);width:15px;height:15px;flex-shrink:0}
-    .check-item span{color:var(--bg-cream);font-size:.83rem;line-height:1.3}
-    .linea{display:grid;grid-template-columns:1fr auto;gap:1rem;align-items:center;background:rgba(0,0,0,.15);border:1px solid rgba(191,217,195,.2);border-radius:9px;padding:.7rem 1rem;margin-bottom:.5rem}
-    .linea select,.linea input{background:rgba(0,0,0,.2);border:1.5px solid var(--accent-light-green);border-radius:7px;color:var(--bg-cream);padding:.5rem .7rem;font-size:.88rem;outline:none}.linea input{width:80px}
-    .row{display:flex;gap:.8rem;margin-top:.5rem}
-    footer{background:var(--bg-dark-green);border-top:1px solid rgba(255,255,255,.1);text-align:center;padding:1rem;color:var(--card-white-warm);font-size:.8rem}
+:root {
+  --verde-oscuro: #26382E; --verde-profundo: #16221b; --verde-medio: #34503F;
+  --crema: #F5F1E9; --verde-claro: #BFD9C3; --cafe-oscuro: #2C1B0E; --marron: #4E342E;
+  --crema-calida: #E8D5C4; --blanco-calido: #EDE5E1;
+  --terracota: #C1652F; --terracota-suave: #E8935F;
+  --sombra: rgba(38,56,46,0.16); --linea-footer: rgba(255,255,255,0.1);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', 'Segoe UI', sans-serif; background: var(--crema); color: var(--cafe-oscuro); min-height: 100vh; display: flex; flex-direction: column; }
+h1, .brand { font-family: 'Playfair Display', Georgia, serif; }
+@keyframes aparecer { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes subirVapor { 0% { transform: translateY(0) scaleX(1); opacity: 0; } 20% { opacity: 1; } 80% { opacity: .55; } 100% { transform: translateY(-70px) scaleX(2.2); opacity: 0; } }
+@keyframes flotar { 0%, 100% { transform: translateY(0) translateX(0); opacity: .5; } 50% { transform: translateY(-14px) translateX(6px); opacity: 1; } }
+@keyframes rippleEffect { to { transform: scale(4); opacity: 0; } }
+
+/* NAV */
+nav { background: linear-gradient(120deg, var(--verde-oscuro) 0%, var(--verde-profundo) 100%); border-bottom: 3px solid var(--terracota); padding: 0 2rem; display: flex; align-items: center; gap: .3rem; height: 68px; position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 16px var(--sombra); }
+.brand { display: flex; align-items: center; gap: .6rem; font-size: 1.25rem; font-weight: 700; color: var(--crema); text-decoration: none; margin-right: 1.4rem; letter-spacing: 1.5px; text-transform: uppercase; }
+.brand img { height: 40px; width: 40px; object-fit: contain; border-radius: 50%; border: 1.5px solid var(--terracota-suave); background: rgba(14,27,19,.6); padding: 2px; }
+.brand span { color: var(--terracota-suave); }
+nav a:not(.brand) { color: var(--blanco-calido); text-decoration: none; padding: .5rem 1.05rem; border-radius: 20px; font-size: .87rem; font-weight: 500; transition: all .25s; border: 1px solid transparent; }
+nav a:not(.brand):hover, nav a.active { background: var(--terracota); color: var(--crema); font-weight: 700; border-color: var(--terracota); }
+.user-badge { display: flex; align-items: center; gap: .7rem; background: rgba(191,217,195,0.12); border: 1px solid rgba(191,217,195,0.4); border-radius: 20px; padding: .4rem 1rem; font-size: .85rem; color: var(--crema); margin-left: auto; font-weight: 600; }
+.user-badge i { color: var(--terracota-suave); font-size: 1rem; }
+.role-badge { display: inline-block; padding: .2rem .7rem; border-radius: 12px; font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; }
+.role-badge.admin { background: rgba(193,101,47,.35); color: var(--terracota-suave); border: 1px solid var(--terracota-suave); }
+.role-badge.cajero { background: rgba(191,217,195,.2); color: var(--verde-claro); border: 1px solid var(--verde-claro); }
+.btn-logout { background: transparent; border: 1px solid rgba(237,229,225,.4); color: var(--blanco-calido); padding: .45rem 1.1rem; border-radius: 20px; font-size: .85rem; font-weight: 600; text-decoration: none; cursor: pointer; display: inline-flex; align-items: center; gap: .4rem; transition: all .25s; }
+.btn-logout:hover { background: rgba(237,229,225,.15); border-color: var(--blanco-calido); transform: translateY(-1px); }
+
+/* HERO */
+.hero { position: relative; overflow: hidden; background: linear-gradient(150deg, var(--verde-oscuro) 0%, #182720 55%, var(--verde-profundo) 100%); padding: 2.2rem 2rem 1.6rem; }
+.hero::after { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at 85% 0%, rgba(193,101,47,.18), transparent 55%); pointer-events: none; }
+.bg-steam { position: absolute; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+.steam { position: absolute; bottom: -40px; border-radius: 50%; background: rgba(191,217,195,.06); filter: blur(16px); animation: subirVapor 11s ease-in-out infinite; }
+.steam.s1 { left: 12%; width: 140px; height: 240px; animation-duration: 12s; }
+.steam.s2 { left: 45%; width: 170px; height: 280px; animation-delay: 3s; animation-duration: 15s; }
+.steam.s3 { left: 78%; width: 120px; height: 210px; animation-delay: 6s; animation-duration: 10s; }
+.particula { position: absolute; border-radius: 50%; background: var(--terracota-suave); opacity: .6; animation: flotar 6s ease-in-out infinite; pointer-events: none; }
+.p1 { width: 8px; height: 8px; top: 24px; right: 60px; }
+.p2 { width: 5px; height: 5px; top: 60px; right: 120px; animation-delay: 1.4s; }
+.p3 { width: 6px; height: 6px; bottom: 20px; right: 40px; animation-delay: 2.8s; }
+.hero-inner { position: relative; z-index: 1; max-width: 820px; margin: 0 auto; display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 1rem; animation: aparecer .6s ease; }
+.hero-inner h1 { font-size: 1.9rem; color: var(--crema); font-weight: 700; }
+.hero-inner small { color: var(--terracota-suave); font-weight: 700; font-size: .8rem; letter-spacing: .04em; }
+
+.container { max-width: 820px; margin: 0 auto; padding: 2.2rem 1.5rem 2.5rem; flex: 1; width: 100%; }
+
+.form-card { background: linear-gradient(150deg, var(--verde-oscuro), var(--verde-profundo)); border: 1px solid rgba(191,217,195,.2); border-radius: 18px; padding: 2rem; box-shadow: 0 16px 36px rgba(0,0,0,.2); animation: aparecer .5s ease backwards; }
+.section-title { color: var(--terracota-suave); font-size: .8rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; margin: .5rem 0 .7rem; }
+.fg { margin-bottom: 1.1rem; }
+.fg label { display: block; margin-bottom: .4rem; color: var(--verde-claro); font-size: .8rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; }
+.fg input, .fg select { width: 100%; padding: .7rem .9rem; background: rgba(0,0,0,.2); border: 1.5px solid rgba(191,217,195,.3); border-radius: 10px; color: var(--crema); font-size: .93rem; outline: none; transition: border-color .2s; }
+.fg input:focus, .fg select:focus { border-color: var(--terracota-suave); }
+.fg select option { background: var(--verde-oscuro); color: var(--crema); }
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.checks-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(185px, 1fr)); gap: .5rem; margin-bottom: 1rem; }
+.check-item { display: flex; align-items: center; gap: .55rem; background: rgba(0,0,0,.18); border: 1px solid rgba(191,217,195,.2); border-radius: 10px; padding: .55rem .8rem; cursor: pointer; transition: background .15s; }
+.check-item:hover { background: rgba(193,101,47,.15); }
+.check-item input[type=checkbox] { accent-color: var(--terracota-suave); width: 15px; height: 15px; flex-shrink: 0; }
+.check-item span { color: var(--crema); font-size: .83rem; line-height: 1.3; }
+.linea { display: grid; grid-template-columns: 1fr auto; gap: 1rem; align-items: center; background: rgba(0,0,0,.18); border: 1px solid rgba(191,217,195,.2); border-radius: 12px; padding: .7rem 1rem; margin-bottom: .5rem; }
+.linea select, .linea input { background: rgba(0,0,0,.2); border: 1.5px solid rgba(191,217,195,.3); border-radius: 8px; color: var(--crema); padding: .5rem .7rem; font-size: .88rem; outline: none; }
+.linea select option { background: var(--verde-oscuro); }
+.linea input { width: 80px; }
+.row { display: flex; gap: .8rem; margin-top: 1rem; }
+
+.btn { display: inline-flex; align-items: center; gap: .4rem; padding: .6rem 1.2rem; border-radius: 20px; font-size: .84rem; font-weight: 700; border: none; cursor: pointer; text-decoration: none; position: relative; overflow: hidden; transition: all .3s cubic-bezier(.22,1,.36,1); }
+.btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px var(--sombra); }
+.btn-gold { background: linear-gradient(135deg, var(--terracota), var(--terracota-suave)); color: white; }
+.btn-gold:hover { filter: brightness(1.08); }
+.btn-green { background: var(--verde-claro); color: var(--verde-oscuro); font-weight: 800; }
+.btn-red { background: var(--marron); color: white; }
+.btn-blue { background: rgba(191,217,195,.15); color: var(--verde-claro); border: 1px solid var(--verde-claro); }
+.btn-sm { padding: .4rem .9rem; font-size: .78rem; }
+.ripple { position: absolute; background: rgba(255,255,255,.5); border-radius: 50%; transform: scale(0); animation: rippleEffect .6s linear; pointer-events: none; }
+
+.foot-v2 { background: var(--cafe-oscuro); border-top: 1px solid var(--linea-footer); padding: 1.6rem 2rem; display: flex; align-items: center; justify-content: center; gap: .9rem; }
+.foot-logo { height: 34px; width: 34px; object-fit: contain; border-radius: 50%; opacity: .9; }
+.foot-text { display: flex; flex-direction: column; text-align: left; }
+.foot-text strong { color: var(--crema); font-family: 'Playfair Display', serif; font-size: .95rem; letter-spacing: .5px; }
+.foot-text span { color: rgba(245,241,233,.55); font-size: .75rem; margin-top: .1rem; }
+
+@media (max-width: 768px) {
+  nav { padding: 0 1rem; gap: .3rem; height: auto; flex-wrap: wrap; padding-block: .6rem; }
+  .hero { padding: 2rem 1rem 2.2rem; }
+  .grid2 { grid-template-columns: 1fr; }
+}
   </style>
 </head>
 <body>
 <nav>
-  <a href="/" class="brand"><span>BRUMA</span></a>
+  <a href="/" class="brand"><img th:src="@{/img/LOGO2.png}" src="/img/LOGO2.png" alt="Logo Bruma"><span>BRUMA</span></a>
   <a th:href="@{/}">Dashboard</a>
   <a th:href="@{/clientes}" sec:authorize="hasRole('ADMIN')">Clientes</a>
   <a th:href="@{/productos}">Productos</a>
@@ -47,6 +108,7 @@
   <a th:href="@{/respaldos}" sec:authorize="hasRole('ADMIN')">Respaldos</a>
   <a th:href="@{/usuarios/nuevo}" sec:authorize="hasRole('ADMIN')">Usuarios</a>
   <div class="user-badge">
+    <i class="ti ti-user-circle"></i>
     <span sec:authentication="name">Usuario</span>
     <span sec:authorize="hasRole('ADMIN')" class="role-badge admin">Admin</span>
     <span sec:authorize="hasRole('CAJERO')" class="role-badge cajero">Cajero</span>
@@ -54,21 +116,27 @@
   </div>
   <form th:action="@{/logout}" method="post" style="display:inline">
     <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
-    <button type="submit" class="btn-logout">Salir</button>
+    <button type="submit" class="btn-logout"><i class="ti ti-logout"></i> Salir</button>
   </form>
 </nav>
 
-<div class="container">
-  <div class="page-hdr">
-    <h1>Nuevo Pedido</h1>
+<div class="hero">
+  <div class="bg-steam"><div class="steam s1"></div><div class="steam s2"></div><div class="steam s3"></div></div>
+  <div class="particula p1"></div><div class="particula p2"></div><div class="particula p3"></div>
+  <div class="hero-inner">
+    <div>
+      <h1>Nuevo Pedido</h1>
+      <small>BRUMA Cafetería — Registro de venta</small>
+    </div>
     <a th:href="@{/pedidos}" class="btn btn-gold btn-sm">← Volver</a>
   </div>
+</div>
 
+<div class="container">
   <div class="form-card">
     <form th:action="@{/pedidos/guardar}" method="post">
       <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
 
-      <!-- DATOS DEL CLIENTE -->
       <p class="section-title">Datos del cliente</p>
       <div class="grid2">
         <div class="fg">
@@ -80,11 +148,10 @@
           <input type="text" name="nombreCliente" required placeholder="Ej: María López"/>
         </div>
       </div>
-      <p style="color:rgba(191,217,195,.7);font-size:.77rem;margin-top:-.5rem;margin-bottom:1rem">
+      <p style="color:rgba(191,217,195,.6);font-size:.77rem;margin-top:-.5rem;margin-bottom:1.2rem">
         Si el DNI no existe, el cliente se registrará automáticamente en el programa de fidelización.
       </p>
 
-      <!-- PRODUCTOS -->
       <p class="section-title">Productos del pedido</p>
       <div id="lineas">
         <div class="linea">
@@ -97,11 +164,10 @@
           <input type="number" name="cantidad" value="1" min="1" required/>
         </div>
       </div>
-      <button type="button" onclick="agregarLinea()" class="btn btn-blue btn-sm" style="margin-bottom:1rem">
+      <button type="button" onclick="agregarLinea()" class="btn btn-blue btn-sm" style="margin-bottom:1.2rem">
         + Agregar producto
       </button>
 
-      <!-- COMENTARIOS -->
       <p class="section-title">Comentarios del pedido</p>
       <div class="checks-grid">
         <label class="check-item" th:each="com : ${comentariosDisponibles}">
@@ -110,7 +176,6 @@
         </label>
       </div>
 
-      <!-- MÉTODO DE PAGO -->
       <div class="fg" style="margin-top:.6rem">
         <label>Método de pago</label>
         <select name="metodoPago">
@@ -126,6 +191,14 @@
   </div>
 </div>
 
+<footer class="foot-v2">
+  <img th:src="@{/img/LOGO2.png}" src="/img/LOGO2.png" alt="Logo Bruma" class="foot-logo">
+  <div class="foot-text">
+    <strong>BRUMA Cafetería</strong>
+    <span>Sistema de Gestión Dual DB · © 2025</span>
+  </div>
+</footer>
+
 <script th:inline="javascript">
   const prods = /*[[${productos}]]*/[];
   function agregarLinea() {
@@ -139,7 +212,19 @@
                    <input type="number" name="cantidad" value="1" min="1" required/>`;
     document.getElementById('lineas').appendChild(d);
   }
+
+  document.querySelectorAll('.btn').forEach(btn => {
+    btn.addEventListener('click', function (e) {
+      const ripple = document.createElement('span');
+      ripple.className = 'ripple';
+      const rect = this.getBoundingClientRect();
+      ripple.style.left = (e.clientX - rect.left) + 'px';
+      ripple.style.top  = (e.clientY - rect.top) + 'px';
+      ripple.style.width = ripple.style.height = Math.max(rect.width, rect.height) + 'px';
+      this.appendChild(ripple);
+      setTimeout(() => ripple.remove(), 650);
+    });
+  });
 </script>
-<footer>BRUMA Cafetería © 2025</footer>
 </body>
 </html>
