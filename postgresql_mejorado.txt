@@ -392,3 +392,50 @@ SELECT * FROM detalle_pedido;
 INSERT INTO usuarios (username, password, rol, nombre) VALUES
   ('admin',  '$2a$10$N.zmdr9k7uOCQb376NoUnuTJ8iAt6Z5EHsM8lE9lBOsl7iAt6Z', 'ROLE_ADMIN',  'Administrador'),
   ('cajero', '$2a$10$N.zmdr9k7uOCQb376NoUnuTJ8iAt6Z5EHsM8lE9lBOsl7iAt6Z', 'ROLE_CAJERO', 'Cajero Principal');
+
+-- 1. Pedidos de clientes cuyo nombre empieza con 'María'
+SELECT p.id_pedido, c.nombre AS cliente, p.total
+FROM pedidos p
+INNER JOIN clientes c ON p.id_cliente = c.id_cliente
+WHERE c.nombre LIKE 'María%';
+
+-- 2. Detalles de pedido de productos cuyo nombre contiene 'Café'
+SELECT d.id_detalle, pr.nombre AS producto, d.cantidad
+FROM detalle_pedido d
+INNER JOIN productos pr ON d.id_producto = pr.id_producto
+WHERE pr.nombre LIKE '%Café%';
+
+-- 3. Productos de categoría 'Bebidas Frías' que aparecen en algún pedido
+SELECT pr.nombre, pr.precio
+FROM productos pr
+INNER JOIN detalle_pedido d ON d.id_producto = pr.id_producto
+WHERE pr.categoria LIKE '%Frías%';
+
+-- 4. Clientes cuyo DNI empieza con '4' y que ya tienen pedidos registrados
+SELECT c.nombre, c.dni, p.id_pedido
+FROM clientes c
+INNER JOIN pedidos p ON p.id_cliente = c.id_cliente
+WHERE c.dni LIKE '4%';
+
+-- 5. Detalles de pedido de productos cuya descripción menciona 'chocolate'
+SELECT d.id_pedido, pr.nombre AS producto, d.cantidad
+FROM detalle_pedido d
+INNER JOIN productos pr ON pr.id_producto = d.id_producto
+WHERE pr.descripcion LIKE '%chocolate%';
+
+-- 6. Usuarios del sistema cuyo rol contiene 'ADMIN'
+SELECT u.username, u.nombre, u.rol
+FROM usuarios u
+WHERE u.rol LIKE '%ADMIN%';
+
+-- 7. Pedidos de clientes cuyo nombre contiene 'Ruiz'
+SELECT c.nombre AS cliente, p.id_pedido, p.total
+FROM clientes c
+INNER JOIN pedidos p ON p.id_cliente = c.id_cliente
+WHERE c.nombre LIKE '%Ruiz%';
+
+-- 8. Detalles de pedido con productos de categoría 'Pastelería'
+SELECT d.id_pedido, pr.nombre AS producto, d.subtotal
+FROM detalle_pedido d
+INNER JOIN productos pr ON pr.id_producto = d.id_producto
+WHERE pr.categoria LIKE '%Pastelería%';
