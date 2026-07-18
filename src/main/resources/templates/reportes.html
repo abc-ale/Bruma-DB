@@ -2,413 +2,127 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="es">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>Reportes  BRUMA</title>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Reportes — BRUMA</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.44.0/dist/tabler-icons.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
 :root {
-  --verde-oscuro: #26382E;
-  --crema: #F5F1E9;
-  --verde-claro: #BFD9C3;
-  --cafe-oscuro: #2C1B0E;
-  --marron: #4E342E;
-  --crema-calida: #E8D5C4;
-  --blanco-calido: #EDE5E1;
-  --overlay: rgba(0,0,0,0.6);
-  --sombra: rgba(0,0,0,0.2);
-  --linea-footer: rgba(255,255,255,0.1);
+  --verde-oscuro: #26382E; --verde-profundo: #16221b; --verde-medio: #34503F;
+  --crema: #F5F1E9; --verde-claro: #BFD9C3; --cafe-oscuro: #2C1B0E; --marron: #4E342E;
+  --crema-calida: #E8D5C4; --blanco-calido: #EDE5E1;
+  --terracota: #C1652F; --terracota-suave: #E8935F; --dorado: #C9962C;
+  --sombra: rgba(38,56,46,0.16); --linea-footer: rgba(255,255,255,0.1);
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
-body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: var(--crema);
-  color: var(--cafe-oscuro);
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
+body { font-family: 'Inter', 'Segoe UI', sans-serif; background: var(--crema); color: var(--cafe-oscuro); min-height: 100vh; display: flex; flex-direction: column; }
+h1, h3, .brand { font-family: 'Playfair Display', Georgia, serif; }
+@keyframes aparecer { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes subirVapor { 0% { transform: translateY(0) scaleX(1); opacity: 0; } 20% { opacity: 1; } 80% { opacity: .55; } 100% { transform: translateY(-70px) scaleX(2.2); opacity: 0; } }
+@keyframes flotar { 0%, 100% { transform: translateY(0) translateX(0); opacity: .5; } 50% { transform: translateY(-14px) translateX(6px); opacity: 1; } }
+@keyframes pulsoSombra { 0%, 100% { box-shadow: 0 4px 14px var(--sombra); } 50% { box-shadow: 0 12px 30px rgba(193,101,47,.22); } }
+@keyframes rippleEffect { to { transform: scale(4); opacity: 0; } }
+
 /* NAV */
-nav {
-  background: var(--verde-oscuro);
-  border-bottom: 3px solid var(--verde-claro);
-  padding: 0 2rem;
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  height: 68px;
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  box-shadow: 0 4px 16px var(--sombra);
-}
-.brand {
-  font-size: 1.4rem;
-  font-weight: 900;
-  color: var(--crema);
-  text-decoration: none;
-  margin-right: auto;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-}
-.brand span { color: var(--verde-claro); }
-nav a {
-  color: var(--blanco-calido);
-  text-decoration: none;
-  padding: .45rem 1rem;
-  border-radius: 6px;
-  font-size: .9rem;
-  font-weight: 500;
-  transition: all .25s;
-  border: 1px solid transparent;
-}
-nav a:hover, nav a.active {
-  background: var(--verde-claro);
-  color: var(--verde-oscuro);
-  font-weight: 700;
-  border-color: var(--verde-claro);
-}
-.user-badge {
-  display: flex;
-  align-items: center;
-  gap: .7rem;
-  background: rgba(191,217,195,0.12);
-  border: 1px solid rgba(191,217,195,0.4);
-  border-radius: 20px;
-  padding: .4rem 1rem;
-  font-size: .85rem;
-  color: var(--crema);
-  margin-left: auto;
-  font-weight: 600;
-}
-.role-badge {
-  display: inline-block;
-  padding: .2rem .7rem;
-  border-radius: 12px;
-  font-size: .72rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: .5px;
-}
-.role-badge.admin {
-  background: rgba(78,52,46,.5);
-  color: var(--crema-calida);
-  border: 1px solid var(--crema-calida);
-}
-.role-badge.cajero {
-  background: rgba(191,217,195,.2);
-  color: var(--verde-claro);
-  border: 1px solid var(--verde-claro);
-}
-.btn-logout {
-  background: transparent;
-  border: 1px solid rgba(237,229,225,.4);
-  color: var(--blanco-calido);
-  padding: .4rem 1rem;
-  border-radius: 6px;
-  font-size: .85rem;
-  font-weight: 600;
-  text-decoration: none;
-  transition: all .25s;
-}
-.btn-logout:hover {
-  background: rgba(237,229,225,.15);
-  border-color: var(--blanco-calido);
-}
-/* CONTAINER */
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 2.5rem 2rem;
-  flex: 1;
-}
-.page-hdr {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 2rem;
-  padding-bottom: 1rem;
-  border-bottom: 2px solid var(--verde-claro);
-}
-.page-hdr h1 {
-  font-size: 1.8rem;
-  color: var(--verde-oscuro);
-  font-weight: 800;
-  letter-spacing: .5px;
-}
-/* CARDS */
-.cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-  gap: 1.5rem;
-  margin-bottom: 2.5rem;
-}
-.card {
-  background: var(--blanco-calido);
-  border: 1px solid var(--crema-calida);
-  border-radius: 14px;
-  padding: 1.8rem;
-  text-align: center;
-  position: relative;
-  overflow: hidden;
-  transition: all .3s;
-  box-shadow: 0 2px 10px var(--sombra);
-}
-.card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 10px 28px var(--sombra);
-  border-color: var(--verde-claro);
-}
-.card::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 4px;
-  background: linear-gradient(90deg, var(--verde-oscuro), var(--verde-claro));
-}
-.card .num {
-  font-size: 2.6rem;
-  font-weight: 900;
-  color: var(--verde-oscuro);
-  line-height: 1;
-  margin: .5rem 0;
-}
-.card .lbl {
-  color: var(--marron);
-  font-size: .9rem;
-  font-weight: 600;
-  margin-top: .6rem;
-}
-/* TABLA */
-table {
-  width: 100%;
-  border-collapse: collapse;
-  background: white;
-  border-radius: 10px;
-  overflow: hidden;
-  box-shadow: 0 2px 10px var(--sombra);
-}
-.tbl-wrap {
-  overflow-x: auto;
-  border-radius: 10px;
-  border: 1px solid var(--crema-calida);
-}
-thead tr { background: var(--verde-oscuro); }
-th {
-  padding: .9rem 1.1rem;
-  text-align: left;
-  color: var(--crema);
-  font-size: .8rem;
-  text-transform: uppercase;
-  letter-spacing: .08em;
-  font-weight: 700;
-}
-td {
-  padding: .9rem 1.1rem;
-  color: var(--cafe-oscuro);
-  font-size: .92rem;
-  border-bottom: 1px solid var(--blanco-calido);
-}
-tbody tr:last-child td { border-bottom: none; }
-tbody tr:hover { background: rgba(191,217,195,.1); }
-/* BOTONES */
-.btn {
-  display: inline-flex;
-  align-items: center;
-  gap: .4rem;
-  padding: .55rem 1.1rem;
-  border-radius: 7px;
-  font-size: .85rem;
-  font-weight: 700;
-  border: none;
-  cursor: pointer;
-  text-decoration: none;
-  transition: all .25s;
-  text-transform: uppercase;
-  letter-spacing: .4px;
-}
-.btn:hover { transform: translateY(-2px); box-shadow: 0 4px 14px var(--sombra); }
-.btn-gold {
-  background: var(--verde-oscuro);
-  color: var(--crema);
-  border: 1px solid var(--verde-oscuro);
-}
-.btn-gold:hover { background: #1a2b21; }
-.btn-green {
-  background: var(--verde-claro);
-  color: var(--verde-oscuro);
-  border: 1px solid var(--verde-claro);
-  font-weight: 800;
-}
-.btn-red {
-  background: var(--marron);
-  color: white;
-  border: 1px solid var(--marron);
-}
-.btn-blue {
-  background: var(--blanco-calido);
-  color: var(--verde-oscuro);
-  border: 1px solid var(--crema-calida);
-}
-.btn-blue:hover { background: var(--crema-calida); }
-.btn-sm { padding: .3rem .7rem; font-size: .75rem; }
-/* FORMULARIOS */
-.form-card {
-  background: white;
-  border: 1px solid var(--crema-calida);
-  border-radius: 14px;
-  padding: 2rem;
-  max-width: 560px;
-  box-shadow: 0 4px 18px var(--sombra);
-}
-.form-card h3 {
-  color: var(--verde-oscuro);
-  margin-bottom: 1.4rem;
-  font-size: 1.1rem;
-  font-weight: 800;
-}
-.fg { margin-bottom: 1.2rem; }
-.fg label {
-  display: block;
-  margin-bottom: .4rem;
-  color: var(--marron);
-  font-size: .8rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: .05em;
-}
-.fg input, .fg select, .fg textarea {
-  width: 100%;
-  padding: .75rem 1rem;
-  background: var(--crema);
-  border: 1.5px solid var(--crema-calida);
-  border-radius: 8px;
-  color: var(--cafe-oscuro);
-  font-size: .93rem;
-  outline: none;
-  transition: all .25s;
-}
-.fg input:focus, .fg select:focus, .fg textarea:focus {
-  border-color: var(--verde-claro);
-  box-shadow: 0 0 0 3px rgba(191,217,195,.25);
-  background: white;
-}
-.row { display: flex; gap: 1rem; margin-top: 1.4rem; }
-/* BADGES */
-.badge {
-  display: inline-block;
-  padding: .25rem .65rem;
-  border-radius: 10px;
-  font-size: .72rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: .4px;
-}
-.chip { display: inline-block; padding: .2rem .55rem; border-radius: 10px; font-size: .72rem; font-weight: 700; }
-.b-beb { background: rgba(38,56,46,.1); color: var(--verde-oscuro); border: 1px solid var(--verde-oscuro); }
-.b-com { background: rgba(191,217,195,.3); color: #2a6040; border: 1px solid var(--verde-claro); }
-.b-pos { background: rgba(232,213,196,.5); color: var(--marron); border: 1px solid var(--crema-calida); }
-.b-otr { background: var(--blanco-calido); color: var(--cafe-oscuro); border: 1px solid var(--crema-calida); }
-.b-pg  { background: rgba(38,56,46,.12); color: var(--verde-oscuro); border: 1px solid var(--verde-oscuro); }
-.b-mg  { background: rgba(191,217,195,.3); color: #2a6040; border: 1px solid var(--verde-claro); }
-/* INFO BOXES */
-.info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 2rem; }
-.info-box {
-  background: white;
-  border: 1px solid var(--crema-calida);
-  border-radius: 14px;
-  padding: 1.5rem;
-  box-shadow: 0 2px 10px var(--sombra);
-}
-.info-box h3 {
-  color: var(--verde-oscuro);
-  margin-bottom: .7rem;
-  font-size: .95rem;
-  font-weight: 800;
-  display: flex;
-  align-items: center;
-  gap: .5rem;
-  border-bottom: 1px solid var(--blanco-calido);
-  padding-bottom: .6rem;
-}
-/* REPORTES */
-.rpt-card {
-  background: white;
-  border: 1px solid var(--crema-calida);
-  border-radius: 14px;
-  padding: 1.8rem;
-  margin-bottom: 1.8rem;
-  box-shadow: 0 2px 10px var(--sombra);
-}
-.rpt-card h3 {
-  color: var(--verde-oscuro);
-  margin-bottom: .5rem;
-  font-size: 1rem;
-  font-weight: 800;
-  display: flex;
-  align-items: center;
-  gap: .6rem;
-  flex-wrap: wrap;
-}
+nav { background: linear-gradient(120deg, var(--verde-oscuro) 0%, var(--verde-profundo) 100%); border-bottom: 3px solid var(--terracota); padding: 0 2rem; display: flex; align-items: center; gap: .3rem; height: 68px; position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 16px var(--sombra); }
+.brand { display: flex; align-items: center; gap: .6rem; font-size: 1.25rem; font-weight: 700; color: var(--crema); text-decoration: none; margin-right: 1.4rem; letter-spacing: 1.5px; text-transform: uppercase; }
+.brand img { height: 40px; width: 40px; object-fit: contain; border-radius: 50%; border: 1.5px solid var(--terracota-suave); background: rgba(14,27,19,.6); padding: 2px; }
+.brand span { color: var(--terracota-suave); }
+nav a:not(.brand) { color: var(--blanco-calido); text-decoration: none; padding: .5rem 1.05rem; border-radius: 20px; font-size: .87rem; font-weight: 500; transition: all .25s; border: 1px solid transparent; }
+nav a:not(.brand):hover, nav a.active { background: var(--terracota); color: var(--crema); font-weight: 700; border-color: var(--terracota); }
+.user-badge { display: flex; align-items: center; gap: .7rem; background: rgba(191,217,195,0.12); border: 1px solid rgba(191,217,195,0.4); border-radius: 20px; padding: .4rem 1rem; font-size: .85rem; color: var(--crema); margin-left: auto; font-weight: 600; }
+.user-badge i { color: var(--terracota-suave); font-size: 1rem; }
+.role-badge { display: inline-block; padding: .2rem .7rem; border-radius: 12px; font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; }
+.role-badge.admin { background: rgba(193,101,47,.35); color: var(--terracota-suave); border: 1px solid var(--terracota-suave); }
+.role-badge.cajero { background: rgba(191,217,195,.2); color: var(--verde-claro); border: 1px solid var(--verde-claro); }
+.btn-logout { background: transparent; border: 1px solid rgba(237,229,225,.4); color: var(--blanco-calido); padding: .45rem 1.1rem; border-radius: 20px; font-size: .85rem; font-weight: 600; text-decoration: none; cursor: pointer; display: inline-flex; align-items: center; gap: .4rem; transition: all .25s; }
+.btn-logout:hover { background: rgba(237,229,225,.15); border-color: var(--blanco-calido); transform: translateY(-1px); }
+
+/* HERO */
+.hero { position: relative; overflow: hidden; background: linear-gradient(150deg, var(--verde-oscuro) 0%, #182720 55%, var(--verde-profundo) 100%); padding: 2.6rem 2rem 2.2rem; }
+.hero::after { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at 85% 0%, rgba(193,101,47,.18), transparent 55%); pointer-events: none; }
+.bg-steam { position: absolute; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+.steam { position: absolute; bottom: -40px; border-radius: 50%; background: rgba(191,217,195,.06); filter: blur(16px); animation: subirVapor 11s ease-in-out infinite; }
+.steam.s1 { left: 12%; width: 140px; height: 240px; animation-duration: 12s; }
+.steam.s2 { left: 45%; width: 170px; height: 280px; animation-delay: 3s; animation-duration: 15s; }
+.steam.s3 { left: 78%; width: 120px; height: 210px; animation-delay: 6s; animation-duration: 10s; }
+.particula { position: absolute; border-radius: 50%; background: var(--terracota-suave); opacity: .6; animation: flotar 6s ease-in-out infinite; pointer-events: none; }
+.p1 { width: 8px; height: 8px; top: 24px; right: 60px; }
+.p2 { width: 5px; height: 5px; top: 60px; right: 120px; animation-delay: 1.4s; }
+.p3 { width: 6px; height: 6px; bottom: 20px; right: 40px; animation-delay: 2.8s; }
+.hero-inner { position: relative; z-index: 1; max-width: 1200px; margin: 0 auto; display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 1rem; animation: aparecer .6s ease; }
+.hero-inner h1 { font-size: 2rem; color: var(--crema); font-weight: 700; }
+.hero-inner small { color: var(--terracota-suave); font-weight: 700; font-size: .8rem; letter-spacing: .04em; }
+
+.container { max-width: 1200px; margin: 0 auto; padding: 2.2rem 2rem 2.5rem; flex: 1; width: 100%; }
+
+/* CARDS (KPIs) */
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-bottom: 2.8rem; margin-top: -3.6rem; position: relative; z-index: 2; }
+.card { background: #ffffff; border: 1px solid rgba(0,0,0,.04); border-radius: 18px; padding: 1.6rem 1.4rem; text-align: center; position: relative; overflow: hidden; transition: all .35s cubic-bezier(.22,1,.36,1); animation: aparecer .5s ease backwards, pulsoSombra 6s ease-in-out infinite; box-shadow: 0 6px 20px rgba(0,0,0,.1); }
+.card:hover { transform: translateY(-7px) scale(1.01); }
+.card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 5px; background: linear-gradient(90deg, var(--terracota), var(--terracota-suave)); }
+.card .num { font-size: 2.1rem; font-weight: 900; color: var(--cafe-oscuro); line-height: 1; margin: .3rem 0; }
+.card .lbl { color: var(--marron); font-size: .82rem; font-weight: 600; }
+
+/* RPT CARDS */
+.rpt-card { background: white; border: 1px solid rgba(0,0,0,.05); border-radius: 18px; padding: 1.8rem; margin-bottom: 1.8rem; box-shadow: 0 6px 20px rgba(0,0,0,.08); animation: aparecer .5s ease .1s backwards; }
+.rpt-card h3 { color: var(--verde-oscuro); margin-bottom: .5rem; font-size: 1.05rem; font-weight: 700; display: flex; align-items: center; gap: .6rem; flex-wrap: wrap; }
 .rpt-card p { color: var(--marron); font-size: .88rem; margin-bottom: 1.1rem; line-height: 1.6; }
-/* ALERTAS */
-.alert { padding: .9rem 1.2rem; border-radius: 10px; margin-bottom: 1.2rem; font-size: .9rem; border-left: 4px solid; }
-.alert-warn { background: rgba(232,213,196,.3); border-color: var(--marron); color: var(--marron); }
-.alert-error { background: rgba(78,52,46,.1); border-color: var(--marron); color: var(--marron); }
-.alert-ok { background: rgba(191,217,195,.25); border-color: var(--verde-claro); color: #2a6040; }
-/* FLOW */
 .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.8rem; }
-.flow-box { background: var(--blanco-calido); border-radius: 10px; padding: 1.1rem; display: flex; flex-direction: column; gap: .8rem; border: 1px solid var(--crema-calida); }
-.flow-item { border-radius: 8px; padding: 1rem; background: white; }
+
+/* TABLA */
+table { width: 100%; border-collapse: collapse; background: white; }
+.tbl-wrap { overflow-x: auto; border-radius: 14px; border: 1px solid rgba(0,0,0,.05); }
+thead tr { background: linear-gradient(90deg, var(--verde-oscuro), var(--verde-medio)); }
+th { padding: .9rem .8rem; text-align: center; color: var(--crema); font-size: .74rem; text-transform: uppercase; letter-spacing: .06em; font-weight: 700; white-space: nowrap; }
+td { padding: .85rem .8rem; text-align: center; color: var(--cafe-oscuro); font-size: .88rem; border-bottom: 1px solid var(--blanco-calido); }
+tbody tr:last-child td { border-bottom: none; }
+tbody tr:hover { background: rgba(193,101,47,.06); }
+
+/* BADGES */
+.badge { display: inline-block; padding: .25rem .7rem; border-radius: 20px; font-size: .68rem; font-weight: 700; text-transform: uppercase; letter-spacing: .3px; }
+.b-pg { background: rgba(38,56,46,.12); color: var(--verde-oscuro); border: 1px solid var(--verde-oscuro); }
+.b-mg { background: rgba(191,217,195,.3); color: #2a6040; border: 1px solid var(--verde-claro); }
+.b-ok { background: rgba(76,175,80,.15); color: #2e7d32; border: 1px solid #4caf50; }
+.b-no { background: rgba(229,57,53,.12); color: #c62828; border: 1px solid #e53935; }
+
+/* FLOW */
+.flow-box { background: var(--crema); border: 1px solid var(--crema-calida); border-radius: 14px; padding: 1.2rem; display: flex; flex-direction: column; gap: .8rem; }
+.flow-item { border-radius: 10px; padding: 1rem; background: white; box-shadow: 0 2px 8px rgba(0,0,0,.05); }
 .flow-item-pg { border-left: 4px solid var(--verde-oscuro); }
 .flow-item-mg { border-left: 4px solid var(--verde-claro); }
-.flow-item-res { border-left: 4px solid var(--marron); }
-.flow-arrow { text-align: center; color: var(--verde-oscuro); font-size: 1rem; font-weight: 700; padding: .2rem 0; }
-/* DATA GRID */
-.data-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 1rem; margin-top: .8rem; }
-.data-item small { display: block; color: var(--marron); font-size: .73rem; text-transform: uppercase; letter-spacing: .05em; margin-bottom: .2rem; }
-.data-item strong { color: var(--cafe-oscuro); font-size: .93rem; }
-.com-item { border-left: 3px solid var(--verde-claro); border-radius: 0 8px 8px 0; padding: .6rem .9rem; margin-bottom: .5rem; background: var(--blanco-calido); }
-.com-txt { color: var(--cafe-oscuro); font-size: .88rem; }
-.com-fecha { color: var(--marron); font-size: .72rem; margin-top: .2rem; }
-/* PEDIDO LINEA */
-.pedido-linea { display: grid; grid-template-columns: 1fr auto; gap: 1rem; align-items: center; background: var(--blanco-calido); border: 1px solid var(--crema-calida); border-radius: 8px; padding: .65rem 1rem; margin-bottom: .5rem; }
-.pedido-linea select, .pedido-linea input { background: white; border: 1.5px solid var(--crema-calida); border-radius: 6px; color: var(--cafe-oscuro); padding: .45rem .65rem; font-size: .88rem; outline: none; }
-.pedido-linea select:focus, .pedido-linea input:focus { border-color: var(--verde-claro); }
-.pedido-linea input { width: 80px; }
+.flow-item-res { border-left: 4px solid var(--terracota); }
+.flow-arrow { text-align: center; color: var(--terracota); font-size: .95rem; font-weight: 700; padding: .1rem 0; }
+
 /* FOOTER */
-footer {
-  background: var(--cafe-oscuro);
-  border-top: 1px solid var(--linea-footer);
-  text-align: center;
-  padding: 1.4rem;
-  color: rgba(245,241,233,0.7);
-  font-size: .82rem;
-  font-weight: 500;
-  letter-spacing: .5px;
-}
+.foot-v2 { background: var(--cafe-oscuro); border-top: 1px solid var(--linea-footer); padding: 1.6rem 2rem; display: flex; align-items: center; justify-content: center; gap: .9rem; }
+.foot-logo { height: 34px; width: 34px; object-fit: contain; border-radius: 50%; opacity: .9; }
+.foot-text { display: flex; flex-direction: column; text-align: left; }
+.foot-text strong { color: var(--crema); font-family: 'Playfair Display', serif; font-size: .95rem; letter-spacing: .5px; }
+.foot-text span { color: rgba(245,241,233,.55); font-size: .75rem; margin-top: .1rem; }
+
 @media (max-width: 768px) {
-  .two-col, .info-grid { grid-template-columns: 1fr; }
-  nav { padding: 0 1rem; gap: .4rem; height: auto; flex-wrap: wrap; padding-block: .6rem; }
+  .two-col { grid-template-columns: 1fr; }
+  nav { padding: 0 1rem; gap: .3rem; height: auto; flex-wrap: wrap; padding-block: .6rem; }
   .container { padding: 1.5rem 1rem; }
-  .page-hdr { flex-direction: column; align-items: flex-start; gap: .8rem; }
+  .hero { padding: 2rem 1rem 3.2rem; }
+  .cards { margin-top: -2.6rem; }
 }
-@media (max-width: 480px) {
-  .cards { grid-template-columns: 1fr; }
-  .row { flex-direction: column; }
-  .btn { width: 100%; justify-content: center; }
-}
-</style>
+@media (max-width: 480px) { .cards { grid-template-columns: 1fr; } }
+  </style>
 </head>
 <body>
 <nav>
-  <a href="/" class="brand"><span>BRUMA</span></a>
+  <a href="/" class="brand"><img th:src="@{/img/LOGO2.png}" src="/img/LOGO2.png" alt="Logo Bruma"><span>BRUMA</span></a>
   <a th:href="@{/}">Dashboard</a>
   <a th:href="@{/clientes}" sec:authorize="hasRole('ADMIN')">Clientes</a>
   <a th:href="@{/productos}">Productos</a>
   <a th:href="@{/pedidos}">Pedidos</a>
   <a th:href="@{/reportes}" sec:authorize="hasRole('ADMIN')" class="active">Reportes</a>
+  <a th:href="@{/respaldos}" sec:authorize="hasRole('ADMIN')">Respaldos</a>
   <a th:href="@{/usuarios/nuevo}" sec:authorize="hasRole('ADMIN')">Usuarios</a>
   <div class="user-badge">
+    <i class="ti ti-user-circle"></i>
     <span sec:authentication="name">Usuario</span>
     <span sec:authorize="hasRole('ADMIN')" class="role-badge admin">Admin</span>
     <span sec:authorize="hasRole('CAJERO')" class="role-badge cajero">Cajero</span>
@@ -416,20 +130,26 @@ footer {
   </div>
   <form th:action="@{/logout}" method="post" style="display:inline">
     <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
-    <button type="submit" class="btn-logout">Salir</button>
+    <button type="submit" class="btn-logout"><i class="ti ti-logout"></i> Salir</button>
   </form>
 </nav>
 
-<div class="container">
-  <div class="page-hdr">
-    <h1>Consultas y Reportes</h1>
+<div class="hero">
+  <div class="bg-steam"><div class="steam s1"></div><div class="steam s2"></div><div class="steam s3"></div></div>
+  <div class="particula p1"></div><div class="particula p2"></div><div class="particula p3"></div>
+  <div class="hero-inner">
+    <div>
+      <h1>Consultas y Reportes</h1>
+      <small>BRUMA Cafetería — Integración PostgreSQL + MongoDB</small>
+    </div>
     <div style="display:flex;gap:.5rem;align-items:center">
-      <span class="badge b-pg">PG PostgreSQL</span>
-      <span class="badge b-mg">MG MongoDB</span>
-      <span style=";font-size:.8rem">Integración por <strong style="">id_cliente</strong></span>
+      <span class="badge b-pg">PostgreSQL</span>
+      <span class="badge b-mg">MongoDB</span>
     </div>
   </div>
+</div>
 
+<div class="container">
   <!-- KPIs -->
   <div class="cards">
     <div class="card">
@@ -438,55 +158,51 @@ footer {
     </div>
     <div class="card">
       <div class="num" th:text="${totalPerfilesMongo}">0</div>
-      <div class="lbl">MG Perfiles Mongo</div>
+      <div class="lbl">Perfiles Mongo</div>
     </div>
     <div class="card">
       <div class="num" th:text="${totalPedidos}">0</div>
       <div class="lbl">Pedidos (PG)</div>
     </div>
     <div class="card">
-      <div class="num" style="font-size:1.6rem">S/ <span th:text="${#numbers.formatDecimal(totalVentas,1,2)}">0</span></div>
+      <div class="num" style="font-size:1.5rem">S/ <span th:text="${#numbers.formatDecimal(totalVentas,1,2)}">0</span></div>
       <div class="lbl">Total ventas</div>
     </div>
   </div>
 
   <!-- Reporte 1: Vista unificada -->
   <div class="rpt-card">
-    <h3>Reporte 1  Vista Unificada de Clientes <span class="badge b-pg">PostgreSQL</span> <span class="badge b-mg">MongoDB</span></h3>
-    <p>Integración de datos relacionales y no estructurados usando <strong style="">id_cliente</strong> como llave común entre Supabase y Atlas.</p>
+    <h3>Reporte 1 — Vista Unificada de Clientes <span class="badge b-pg">PostgreSQL</span> <span class="badge b-mg">MongoDB</span></h3>
+    <p>Integración de datos relacionales y no estructurados usando <strong>id_cliente</strong> como llave común entre Supabase y Atlas.</p>
     <div class="tbl-wrap">
       <table>
         <thead>
           <tr>
             <th>ID</th><th>Nombre</th><th>DNI</th>
-            <th title="MongoDB"> Coment.</th>
-            <th title="MongoDB"> Pago</th>
-            <th title="MongoDB"> Notif.</th>
-            <th> Total compras</th>
-            <th>#Pedidos</th>
-            <th>Perfil Mongo</th>
+            <th>Coment.</th><th>Pago</th><th>Notif.</th>
+            <th>Total compras</th><th>#Pedidos</th><th>Perfil Mongo</th>
           </tr>
         </thead>
         <tbody>
           <tr th:each="p : ${perfiles}">
-            <td style="" th:text="${p.idCliente}"></td>
+            <td th:text="${p.idCliente}"></td>
             <td style="font-weight:600" th:text="${p.nombre}"></td>
-            <td style="" th:text="${p.dni}"></td>
+            <td th:text="${p.dni}"></td>
             <td th:text="${p.nComentarios}"></td>
             <td th:text="${p.metodoPago}"></td>
             <td>
-              <span th:if="${p.notif}"  style=""></span>
-              <span th:unless="${p.notif}" style=""></span>
+              <span th:if="${p.notif}">✓</span>
+              <span th:unless="${p.notif}">—</span>
             </td>
-            <td style=";font-weight:700">S/ <span th:text="${#numbers.formatDecimal(p.totalCompras,1,2)}"></span></td>
+            <td style="font-weight:700">S/ <span th:text="${#numbers.formatDecimal(p.totalCompras,1,2)}"></span></td>
             <td th:text="${p.numPedidos}"></td>
             <td>
-              <span th:if="${p.tienePerfilMongo}" class="badge" style="background:rgba(76,175,80,.2);color:#a5d6a7;border:1px solid #4caf50;font-size:.7rem">Si</span>
-              <span th:unless="${p.tienePerfilMongo}" class="badge" style="background:rgba(229,57,53,.2);color:#ff8a80;border:1px solid #e53935;font-size:.7rem">No</span>
+              <span th:if="${p.tienePerfilMongo}" class="badge b-ok">Sí</span>
+              <span th:unless="${p.tienePerfilMongo}" class="badge b-no">No</span>
             </td>
           </tr>
           <tr th:if="${#lists.isEmpty(perfiles)}">
-            <td colspan="9" style="text-align:center;;padding:2rem">Sin datos.</td>
+            <td colspan="9" style="text-align:center;padding:2rem">Sin datos.</td>
           </tr>
         </tbody>
       </table>
@@ -496,8 +212,8 @@ footer {
   <!-- Reportes 2 y 3 -->
   <div class="two-col">
     <div class="rpt-card">
-      <h3>Reporte 2  Metodos de Pago <span class="badge b-mg">MongoDB</span></h3>
-      <p>Preferencias de pago almacenadas en la colección <code style="">clientes_info</code>.</p>
+      <h3>Reporte 2 — Métodos de Pago <span class="badge b-mg">MongoDB</span></h3>
+      <p>Preferencias de pago almacenadas en la colección <code>clientes_info</code>.</p>
       <table>
         <thead><tr><th>Método</th><th>Clientes</th></tr></thead>
         <tbody>
@@ -509,39 +225,46 @@ footer {
               <span th:if="${e.key=='efectivo'}">Efectivo</span>
               <span th:unless="${e.key=='yape' or e.key=='plin' or e.key=='tarjeta' or e.key=='efectivo'}" th:text="${e.key}"></span>
             </td>
-            <td style=";font-weight:700" th:text="${e.value}"></td>
+            <td style="font-weight:700" th:text="${e.value}"></td>
           </tr>
           <tr th:if="${metodosPago == null || metodosPago.isEmpty()}">
-          <td colspan="2" class="text-center">No hay métodos de pago registrados</td>
-          </tr>    
+            <td colspan="2" style="text-align:center">No hay métodos de pago registrados</td>
+          </tr>
         </tbody>
       </table>
     </div>
 
     <div class="rpt-card">
-      <h3>Reporte 3  Arquitectura de Integracion</h3>
+      <h3>Reporte 3 — Arquitectura de Integración</h3>
       <p>Flujo de datos entre las dos bases de datos del sistema.</p>
       <div class="flow-box">
         <div class="flow-item flow-item-pg">
-          <div style="color:#90caf9;font-weight:700;font-size:.85rem;margin-bottom:.3rem">PostgreSQL  Supabase</div>
-          <div style="font-size:.8rem;">clientes · pedidos · detalle_pedido · productos</div>
-          <div style="font-size:.75rem;">Datos relacionales con integridad referencial</div>
+          <div style="color:var(--verde-oscuro);font-weight:700;font-size:.85rem;margin-bottom:.3rem">PostgreSQL — Supabase</div>
+          <div style="font-size:.8rem">clientes · pedidos · detalle_pedido · productos</div>
+          <div style="font-size:.75rem;color:var(--marron)">Datos relacionales con integridad referencial</div>
         </div>
-        <div class="flow-arrow"> <code style="font-size:.78rem;">id_cliente</code> </div>
+        <div class="flow-arrow">↓ <code style="font-size:.78rem">id_cliente</code> ↓</div>
         <div class="flow-item flow-item-mg">
-          <div style="color:#a5d6a7;font-weight:700;font-size:.85rem;margin-bottom:.3rem">MongoDB  Atlas</div>
-          <div style="font-size:.8rem;">clientes_info · { comentarios[], preferencias{} }</div>
-          <div style="font-size:.75rem;">Datos dinámicos y no estructurados</div>
+          <div style="color:#2a6040;font-weight:700;font-size:.85rem;margin-bottom:.3rem">MongoDB — Atlas</div>
+          <div style="font-size:.8rem">clientes_info · { comentarios[], preferencias{} }</div>
+          <div style="font-size:.75rem;color:var(--marron)">Datos dinámicos y no estructurados</div>
         </div>
-        <div class="flow-arrow"> Spring Boot Service </div>
+        <div class="flow-arrow">↓ Spring Boot Service ↓</div>
         <div class="flow-item flow-item-res">
-          <div style=";font-weight:700;font-size:.85rem;margin-bottom:.3rem">Vista unificada  Reporte 1</div>
-          <div style="font-size:.8rem;">JOIN a nivel de aplicación Spring Boot</div>
+          <div style="font-weight:700;font-size:.85rem;margin-bottom:.3rem">Vista unificada — Reporte 1</div>
+          <div style="font-size:.8rem">JOIN a nivel de aplicación Spring Boot</div>
         </div>
       </div>
     </div>
   </div>
 </div>
-<footer>BRUMA Cafetería © 2025</footer>
+
+<footer class="foot-v2">
+  <img th:src="@{/img/LOGO2.png}" src="/img/LOGO2.png" alt="Logo Bruma" class="foot-logo">
+  <div class="foot-text">
+    <strong>BRUMA Cafetería</strong>
+    <span>Sistema de Gestión Dual DB · © 2025</span>
+  </div>
+</footer>
 </body>
 </html>

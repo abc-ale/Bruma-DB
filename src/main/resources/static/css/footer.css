@@ -1,0 +1,42 @@
+/* ── FOOTER ──────────────────────────────────── */
+footer {
+  background: var(--verde-profundo);
+  border-top: 2px solid rgba(193,101,47,.25);
+  padding: 1.6rem 2rem;
+  margin-top: auto;
+  color: rgba(245,241,233,.5);
+  font-size: .8rem;
+}
+.footer-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.2rem;
+  flex-wrap: wrap;
+}
+.footer-brand {
+  display: flex; align-items: center; gap: .55rem;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1rem; font-weight: 700; letter-spacing: 1px;
+  color: var(--crema); text-transform: uppercase;
+}
+.footer-brand i   { color: var(--terracota-suave); }
+.footer-brand span { color: var(--terracota-suave); }
+
+.footer-links {
+  display: flex; align-items: center; gap: 1.4rem; flex-wrap: wrap;
+}
+.footer-links a {
+  color: rgba(245,241,233,.45);
+  text-decoration: none; font-size: .8rem;
+  transition: color .2s;
+}
+.footer-links a:hover { color: var(--crema); }
+
+.footer-copy { font-size: .75rem; color: rgba(245,241,233,.3); }
+
+@media (max-width: 600px) {
+  .footer-inner { flex-direction: column; align-items: flex-start; gap: .8rem; }
+}

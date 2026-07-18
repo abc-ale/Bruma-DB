@@ -212,11 +212,24 @@ nav a:not(.brand):hover, nav a.active {
 .page-hdr h1 { font-size: 1.3rem; color: var(--verde-oscuro); font-weight: 700; }
 
 /* TABLA */
-table { width: 100%; border-collapse: collapse; background: white; }
+table {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+  background: white;
+}
 .tbl-wrap { overflow-x: auto; border-radius: 16px; border: 1px solid rgba(0,0,0,.05); box-shadow: 0 6px 20px rgba(0,0,0,.08); animation: aparecer .5s ease .3s backwards; }
 thead tr { background: linear-gradient(90deg, var(--verde-oscuro), var(--verde-medio)); }
-th { padding: 1rem 1.1rem; text-align: left; color: var(--crema); font-size: .78rem; text-transform: uppercase; letter-spacing: .08em; font-weight: 700; }
-td { padding: 1rem 1.1rem; color: var(--cafe-oscuro); font-size: .92rem; border-bottom: 1px solid var(--blanco-calido); }
+th {
+  padding: 1rem 1.1rem; text-align: center; color: var(--crema); font-size: .78rem;
+  text-transform: uppercase; letter-spacing: .08em; font-weight: 700; white-space: nowrap;
+}
+th:nth-child(1) { width: 8%; }
+th:nth-child(2) { width: 22%; }
+th:nth-child(3) { width: 18%; }
+th:nth-child(4) { width: 20%; }
+th:nth-child(5) { width: 32%; }
+td { padding: 1rem 1.1rem; text-align: center; color: var(--cafe-oscuro); font-size: .92rem; border-bottom: 1px solid var(--blanco-calido); overflow: hidden; text-overflow: ellipsis; }
 tbody tr:last-child td { border-bottom: none; }
 tbody tr { transition: background .2s; }
 tbody tr:hover { background: rgba(193,101,47,.06); }
@@ -263,7 +276,19 @@ tbody tr:hover { background: rgba(193,101,47,.06); }
 .alert-warn { background: rgba(193,101,47,.1); border-color: var(--terracota); color: var(--terracota); }
 .alert-ok { background: rgba(191,217,195,.25); border-color: var(--verde-claro); color: #2a6040; }
 
-footer { background: var(--cafe-oscuro); border-top: 1px solid var(--linea-footer); text-align: center; padding: 1.4rem; color: rgba(245,241,233,0.7); font-size: .82rem; font-weight: 500; letter-spacing: .5px; }
+.foot-v2 {
+  background: var(--cafe-oscuro);
+  border-top: 1px solid var(--linea-footer);
+  padding: 1.6rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .9rem;
+}
+.foot-logo { height: 34px; width: 34px; object-fit: contain; border-radius: 50%; opacity: .9; }
+.foot-text { display: flex; flex-direction: column; text-align: left; }
+.foot-text strong { color: var(--crema); font-family: 'Playfair Display', serif; font-size: .95rem; letter-spacing: .5px; }
+.foot-text span { color: rgba(245,241,233,.55); font-size: .75rem; margin-top: .1rem; }
 
 @media (max-width: 768px) {
   .info-grid { grid-template-columns: 1fr; }
@@ -356,7 +381,7 @@ footer { background: var(--cafe-oscuro); border-top: 1px solid var(--linea-foote
         <tr th:each="p : ${pedidosRecientes}">
           <td class="pedido-id" th:text="${p.idPedido}"></td>
           <td th:text="${p.cliente.nombre}"></td>
-          <td th:text="${p.fechaPedido}"></td>
+          <td th:text="${#temporals.format(p.fechaPedido, 'dd/MM/yyyy HH:mm')}"></td>
           <td><span class="pedido-total">S/ <span th:text="${#numbers.formatDecimal(p.total,1,2)}"></span></span></td>
           <td><a th:href="@{/pedidos/ver/{id}(id=${p.idPedido})}" class="btn btn-blue btn-sm">Ver</a></td>
         </tr>
@@ -387,7 +412,13 @@ footer { background: var(--cafe-oscuro); border-top: 1px solid var(--linea-foote
     </div>
   </div>
 </div>
-<footer>BRUMA Cafetería © 2025</footer>
+<footer class="foot-v2">
+  <img th:src="@{/img/LOGO2.png}" src="/img/LOGO2.png" alt="Logo Bruma" class="foot-logo">
+  <div class="foot-text">
+    <strong>BRUMA Cafetería</strong>
+    <span>Sistema de Gestión Dual DB · © 2025</span>
+  </div>
+</footer>
 
 <script>
   document.querySelectorAll('.btn').forEach(btn => {
