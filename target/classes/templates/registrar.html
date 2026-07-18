@@ -144,11 +144,10 @@ nav a:hover, nav a.active {
 }
 .alert-ok    { background: rgba(191,217,195,.25); border-color: var(--verde-claro); color: #2a6040; }
 .alert-error { background: rgba(78,52,46,.08);   border-color: var(--marron);      color: var(--marron); }
-footer {
-  background: var(--cafe-oscuro); border-top: 1px solid var(--linea-footer);
-  text-align: center; padding: 1.4rem;
-  color: rgba(245,241,233,0.7); font-size: .82rem; letter-spacing: .5px;
-}
+.site-footer{background:#2C1B0E;border-top:1px solid rgba(255,255,255,.1);padding:1.6rem 2rem;margin-top:auto;text-align:center}
+.site-footer-brand{font-family:'Playfair Display',Georgia,serif;font-size:1.05rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#F5F1E9}
+.site-footer-brand span{color:#E8935F}
+.site-footer-sub{margin-top:.35rem;font-size:.78rem;color:rgba(245,241,233,.5)}
   </style>
 </head>
 <body>
@@ -229,6 +228,9 @@ footer {
   </div>
 </div>
 
-<footer>BRUMA Cafetería © 2025</footer>
+<footer class="site-footer">
+  <p class="site-footer-brand">BRUMA <span>CAFETERÍA</span></p>
+  <p class="site-footer-sub">Sistema de Gestión Dual DB · © 2025</p>
+</footer>
 </body>
 </html>
