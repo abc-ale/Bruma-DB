@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Clientes — BRUMA</title>
+  <style>
+    :root {
+      --verde-oscuro:#26382E; --crema:#F5F1E9; --verde-claro:#BFD9C3;
+      --cafe-oscuro:#2C1B0E; --marron:#4E342E; --crema-calida:#E8D5C4;
+      --blanco-calido:#EDE5E1; --sombra:rgba(0,0,0,0.2);
+      --linea-footer:rgba(255,255,255,0.1);
+    }
+    * { box-sizing:border-box; margin:0; padding:0; }
+    body { font-family:'Segoe UI',sans-serif; background:var(--crema); color:var(--cafe-oscuro); min-height:100vh; display:flex; flex-direction:column; }
+    nav { background:var(--verde-oscuro); border-bottom:3px solid var(--verde-claro); padding:0 2rem; display:flex; align-items:center; gap:1rem; height:68px; position:sticky; top:0; z-index:100; box-shadow:0 4px 16px var(--sombra); }
+    .brand { font-size:1.4rem; font-weight:900; color:var(--crema); text-decoration:none; margin-right:auto; letter-spacing:3px; text-transform:uppercase; }
+    .brand span { color:var(--verde-claro); }
+    nav a { color:var(--blanco-calido); text-decoration:none; padding:.45rem 1rem; border-radius:6px; font-size:.9rem; font-weight:500; transition:all .25s; border:1px solid transparent; }
+    nav a:hover, nav a.active { background:var(--verde-claro); color:var(--verde-oscuro); font-weight:700; border-color:var(--verde-claro); }
+    .user-badge { display:flex; align-items:center; gap:.7rem; background:rgba(191,217,195,.12); border:1px solid rgba(191,217,195,.4); border-radius:20px; padding:.4rem 1rem; font-size:.85rem; color:var(--crema); font-weight:600; }
+    .role-badge { display:inline-block; padding:.2rem .7rem; border-radius:12px; font-size:.72rem; font-weight:700; text-transform:uppercase; }
+    .role-badge.cajero { background:rgba(191,217,195,.2); color:var(--verde-claro); border:1px solid var(--verde-claro); }
+    .btn-logout { background:transparent; border:1px solid rgba(237,229,225,.4); color:var(--blanco-calido); padding:.4rem 1rem; border-radius:6px; font-size:.85rem; font-weight:600; cursor:pointer; transition:all .25s; }
+    .btn-logout:hover { background:rgba(237,229,225,.15); }
+    .container { max-width:1000px; margin:0 auto; padding:2.5rem 2rem; flex:1; }
+    .page-hdr { display:flex; align-items:center; justify-content:space-between; margin-bottom:2rem; padding-bottom:1rem; border-bottom:2px solid var(--verde-claro); }
+    .page-hdr h1 { font-size:1.8rem; color:var(--verde-oscuro); font-weight:800; }
+    .alert-info { background:rgba(191,217,195,.2); border:1px solid var(--verde-claro); border-radius:10px; padding:.9rem 1.2rem; margin-bottom:1.5rem; color:#2a6040; font-size:.88rem; }
+    .tbl-wrap { overflow-x:auto; border-radius:10px; border:1px solid var(--crema-calida); }
+    table { width:100%; border-collapse:collapse; background:white; border-radius:10px; overflow:hidden; box-shadow:0 2px 10px var(--sombra); }
+    thead tr { background:var(--verde-oscuro); }
+    th { padding:.9rem 1.1rem; text-align:left; color:var(--crema); font-size:.8rem; text-transform:uppercase; letter-spacing:.08em; font-weight:700; }
+    td { padding:.9rem 1.1rem; color:var(--cafe-oscuro); font-size:.92rem; border-bottom:1px solid var(--blanco-calido); }
+    tbody tr:last-child td { border-bottom:none; }
+    tbody tr:hover { background:rgba(191,217,195,.1); }
+    .chip { display:inline-block; background:rgba(38,56,46,.1); color:var(--verde-oscuro); border:1px solid rgba(38,56,46,.3); border-radius:8px; padding:.2rem .55rem; font-size:.75rem; font-weight:600; margin:.15rem; }
+    footer { background:var(--cafe-oscuro); border-top:1px solid var(--linea-footer); text-align:center; padding:1.4rem; color:rgba(245,241,233,.7); font-size:.82rem; }
+  </style>
+</head>
+<body>
+<nav>
+  <a href="/" class="brand"><span>BRUMA</span></a>
+  <a th:href="@{/}">Dashboard</a>
+  <a th:href="@{/clientes}" sec:authorize="hasRole('ADMIN')" class="active">Clientes</a>
+  <a th:href="@{/productos}">Productos</a>
+  <a th:href="@{/pedidos}">Pedidos</a>
+  <a th:href="@{/reportes}" sec:authorize="hasRole('ADMIN')">Reportes</a>
+  <a th:href="@{/respaldos}" sec:authorize="hasRole('ADMIN')">Respaldos</a>
+  <a th:href="@{/usuarios/nuevo}" sec:authorize="hasRole('ADMIN')">Usuarios</a>
+  <div class="user-badge">
+    <span sec:authentication="name">Usuario</span>
+    <span sec:authorize="hasRole('ADMIN')" class="role-badge admin">Admin</span>
+    <span sec:authorize="hasRole('CAJERO')" class="role-badge cajero">Cajero</span>
+    <span sec:authorize="hasRole('MESERO')" class="role-badge mesero">Mesero</span>
+  </div>
+  <form th:action="@{/logout}" method="post" style="display:inline">
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+    <button type="submit" class="btn-logout">Salir</button>
+  </form>
+</nav>
+
+<div class="container">
+  <div class="page-hdr">
+    <h1>Clientes y sus pedidos</h1>
+  </div>
+
+  <div class="alert-info">
+    Vista de cajero — solo nombre del cliente y productos asociados. Los datos personales no están disponibles en esta vista.
+  </div>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Cliente</th>
+          <th>Productos en sus pedidos</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="r : ${resumen}">
+          <td style="font-weight:700" th:text="${r.nombre}"></td>
+          <td>
+            <span th:if="${#lists.isEmpty(r.productosDelPedido)}"
+                  style="color:#aaa;font-size:.85rem">Sin pedidos</span>
+            <span th:each="prod : ${r.productosDelPedido}" class="chip" th:text="${prod}"></span>
+          </td>
+        </tr>
+        <tr th:if="${#lists.isEmpty(resumen)}">
+          <td colspan="2" style="text-align:center;padding:2rem;color:#aaa">Sin clientes registrados.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<footer>BRUMA Cafetería © 2025</footer>
+</body>
+</html>

@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bruma Café — Sistema Interno</title>
+  <link rel="stylesheet" th:href="@{/css/login.css}" href="/css/login.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.44.0/dist/tabler-icons.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    /* Modal "¿Olvidaste tu contraseña?" — estilos propios, igual que en el
+       original, no se tocó login.css para no mezclar este cambio con el
+       commit del login. */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(13, 22, 16, 0.65);
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .modal-overlay.show { display: flex; animation: aparecer 0.25s ease; }
+
+    .modal-box {
+      background: var(--blanco);
+      border-radius: 20px;
+      padding: 36px;
+      width: 100%;
+      max-width: 400px;
+      position: relative;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 16px; right: 16px;
+      background: none;
+      border: none;
+      font-size: 20px;
+      color: #999;
+      cursor: pointer;
+      padding: 4px;
+      line-height: 1;
+    }
+    .modal-close:hover { color: var(--verde-profundo); }
+
+    .modal-box h2 { font-size: 22px; margin-bottom: 8px; color: var(--verde-profundo); }
+    .modal-box .subtitle { margin-bottom: 24px; }
+
+    .login-success {
+      display: none;
+      align-items: center;
+      gap: 10px;
+      background: #f0f9f3;
+      border-left: 3px solid var(--verde-medio);
+      color: var(--verde-profundo);
+      font-size: 13px;
+      font-weight: 500;
+      padding: 12px 16px;
+      border-radius: 8px;
+      margin-bottom: 24px;
+    }
+    .login-success.show { display: flex; animation: aparecer 0.3s ease; }
+
+    /* SOLO DESARROLLO — quitar junto con el bloque .dev-creds del HTML */
+    .dev-creds { margin-top: 22px; padding-top: 18px; border-top: 1px dashed #ddd; }
+    .dev-creds-label { font-size: 11.5px; color: #999; margin-bottom: 10px; text-align: center; }
+    .dev-creds-buttons { display: flex; gap: 10px; }
+    .dev-cred-btn {
+      flex: 1; display: flex; align-items: center; justify-content: center; gap: 6px;
+      background: var(--gris-suave, #f7f7f5); border: 1px dashed #ccc; border-radius: 10px;
+      padding: 9px 10px; font-family: 'Inter', sans-serif; font-size: 12.5px; font-weight: 500;
+      color: #777; cursor: pointer; transition: all .2s ease;
+    }
+    .dev-cred-btn:hover { background: #eee; border-color: #bbb; color: #444; }
+  </style>
+</head>
+<body>
+
+  <div class="bg-steam">
+    <div class="steam s1"></div>
+    <div class="steam s2"></div>
+    <div class="steam s3"></div>
+  </div>
+
+  <div class="login-wrap">
+
+    <div class="login-left">
+      <div class="particula p1"></div>
+      <div class="particula p2"></div>
+      <div class="particula p3"></div>
+      <div class="particula p4"></div>
+      <div class="circulo-decor c1"></div>
+      <div class="circulo-decor c2"></div>
+
+      <div class="left-content">
+        <div class="login-logo-ring">
+          <div class="login-logo-circle">
+            <img th:src="@{/img/LOGO2.png}" src="/img/LOGO2.png" alt="Logo Bruma Café" class="login-logo-img">
+          </div>
+        </div>
+
+        <div class="brand-text">
+          <h1>Bruma<br><span>Café</span></h1>
+          <div class="brand-divider"></div>
+          <p>Despierta tus sentidos,<br>gestiona tu café.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="login-right">
+      <div class="right-body">
+        <h2>Bienvenido de nuevo</h2>
+        <p class="subtitle">Ingresa tus credenciales autorizadas para acceder al sistema de gestión.</p>
+
+        <!--
+          ADAPTACIÓN AL BACKEND (1/3):
+          En Sistema-Cafeteria este div lo mostraba JS cuando el fetch()
+          a /usuarios/login fallaba. Bruma-DB no usa fetch: es formLogin
+          de Spring Security, que al fallar redirige el navegador a
+          /login?error=true. Por eso el error ahora se pinta con
+          Thymeleaf (th:if="${param.error}") — nada de JS haciendo peticiones.
+        -->
+        <div class="login-error" th:classappend="${param.error} ? ' show' : ''" id="error-msg">
+          <i class="ti ti-alert-circle"></i>
+          <span id="error-text">Usuario o contraseña incorrectos.</span>
+        </div>
+
+        <div class="login-success" th:classappend="${param.logout} ? ' show' : ''">
+          <i class="ti ti-circle-check"></i>
+          <span>Sesión cerrada correctamente.</span>
+        </div>
+
+        <!--
+          ADAPTACIÓN AL BACKEND (2/3):
+          Ya no hay onclick="ingresar()" con fetch + JWT en sessionStorage.
+          Es un <form> normal que postea a /login (lo intercepta el filtro
+          de Spring Security por defecto, antes de llegar a cualquier
+          controlador). name="username"/"password" son los parámetros que
+          ese filtro ya espera de fábrica. El token CSRF se agrega solo:
+          Thymeleaf + spring-security-dialect lo inyectan automáticamente
+          en cualquier <form th:action="...">. No se tocó SecurityConfig.
+        -->
+        <form th:action="@{/login}" method="post">
+
+          <div class="login-field">
+            <label for="username"><i class="ti ti-user"></i> Usuario</label>
+            <div class="input-wrap">
+              <input type="text" id="username" name="username" placeholder="Tu nombre de usuario" autocomplete="username" autofocus required>
+              <span class="input-focus-line"></span>
+            </div>
+          </div>
+
+          <div class="login-field">
+            <label for="password"><i class="ti ti-lock"></i> Contraseña</label>
+            <div class="input-wrap">
+              <input type="password" id="password" name="password" placeholder="••••••••" autocomplete="current-password" required>
+              <button class="toggle-pass" type="button" onclick="togglePassword()" aria-label="Mostrar contraseña">
+                <i class="ti ti-eye" id="eye-icon"></i>
+              </button>
+              <span class="input-focus-line"></span>
+            </div>
+          </div>
+
+          <div class="login-options">
+            <label class="remember-me">
+              <input type="checkbox" id="remember">
+              <span class="checkmark"></span>
+              Recordarme
+            </label>
+            <a href="#" class="inline-link" onclick="abrirModalRecuperar(event)">¿Olvidaste tu contraseña?</a>
+          </div>
+
+          <div class="action-group">
+            <button class="login-btn" id="login-btn" type="submit">
+              <span class="btn-text">Ingresar al sistema</span>
+              <span class="btn-icon"><i class="ti ti-arrow-right"></i></span>
+              <span class="btn-loader" style="display:none;"><i class="ti ti-loader-2"></i></span>
+            </button>
+          </div>
+        </form>
+
+        <!--
+          SOLO DESARROLLO — botones para autocompletar las credenciales de
+          prueba sembradas por DataInitializer. Quitar este bloque completo
+          antes de desplegar a producción: expone usuario/contraseña reales
+          sin necesidad de loguearse.
+        -->
+        <div class="dev-creds">
+          <p class="dev-creds-label">Acceso rápido (solo pruebas):</p>
+          <div class="dev-creds-buttons">
+            <button type="button" class="dev-cred-btn" onclick="autocompletar('admin','admin123')">
+              <i class="ti ti-shield-star"></i> Admin
+            </button>
+            <button type="button" class="dev-cred-btn" onclick="autocompletar('cajero','cajero123')">
+              <i class="ti ti-cash-register"></i> Cajero
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Modal: ¿Olvidaste tu contraseña? -->
+  <div class="modal-overlay" id="modal-recuperar">
+    <div class="modal-box">
+      <button class="modal-close" onclick="cerrarModalRecuperar()" aria-label="Cerrar">
+        <i class="ti ti-x"></i>
+      </button>
+
+      <h2>Recuperar contraseña</h2>
+      <p class="subtitle">
+        <!--
+          ADAPTACIÓN AL BACKEND (3/3):
+          En Sistema-Cafeteria este modal llamaba a /api/auth/forgot-password
+          (PasswordResetService), que sí existe en ese backend. Bruma-DB NO
+          tiene ese servicio, y no se agregó ninguno para no tocar la
+          arquitectura. Por eso el modal se deja como mensaje informativo,
+          en vez de enviar un formulario a un endpoint que no existe.
+        -->
+        Por ahora este sistema no envía enlaces automáticos de recuperación.
+        Contacta al administrador para restablecer tu contraseña.
+      </p>
+
+      <div class="action-group">
+        <button class="login-btn" onclick="cerrarModalRecuperar()">
+          <span class="btn-text">Entendido</span>
+          <span class="btn-icon"><i class="ti ti-arrow-right"></i></span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // SOLO DESARROLLO — quitar junto con el bloque .dev-creds del HTML
+    function autocompletar(usuario, clave) {
+      document.getElementById('username').value = usuario;
+      document.getElementById('password').value = clave;
+    }
+
+    function togglePassword() {
+      const input = document.getElementById('password');
+      const icon  = document.getElementById('eye-icon');
+      if (input.type === 'password') {
+        input.type = 'text';
+        icon.className = 'ti ti-eye-off';
+      } else {
+        input.type = 'password';
+        icon.className = 'ti ti-eye';
+      }
+    }
+
+    document.addEventListener('keydown', e => {
+      const modalAbierto = document.getElementById('modal-recuperar').classList.contains('show');
+      if (e.key === 'Escape' && modalAbierto) { cerrarModalRecuperar(); }
+    });
+
+    function abrirModalRecuperar(e) {
+      e.preventDefault();
+      document.getElementById('modal-recuperar').classList.add('show');
+    }
+
+    function cerrarModalRecuperar() {
+      document.getElementById('modal-recuperar').classList.remove('show');
+    }
+
+    // Cerrar al hacer click fuera de la caja del modal.
+    document.getElementById('modal-recuperar').addEventListener('click', function(e) {
+      if (e.target === this) cerrarModalRecuperar();
+    });
+
+    // El botón ahora es type="submit": el navegador hace la navegación real
+    // a /login (POST). Solo mostramos el spinner mientras eso ocurre.
+    document.querySelector('form').addEventListener('submit', function () {
+      document.getElementById('login-btn').classList.add('loading');
+    });
+
+    document.getElementById('login-btn').addEventListener('click', function(e) {
+      const ripple = document.createElement('span');
+      ripple.className = 'ripple';
+      const rect = this.getBoundingClientRect();
+      ripple.style.left = (e.clientX - rect.left) + 'px';
+      ripple.style.top  = (e.clientY - rect.top) + 'px';
+      this.appendChild(ripple);
+      setTimeout(() => ripple.remove(), 700);
+    });
+  </script>
+</body>
+</html>
