@@ -6,7 +6,7 @@
       { "texto": "Sin azúcar", "fecha": "2026-04-01" },
       { "texto": "Extra shot de espresso", "fecha": "2026-04-15" }
     ],
-    "preferencias": { "metodoPago": "yape", "notificaciones": true }
+    "preferencias": { "metodoPago": "yape" }
   },
   {
     "id_cliente": 2,
@@ -15,7 +15,7 @@
       { "texto": "Con sirope de vainilla", "fecha": "2026-04-02" },
       { "texto": "Todo para llevar", "fecha": "2026-04-20" }
     ],
-    "preferencias": { "metodoPago": "plin", "notificaciones": false }
+    "preferencias": { "metodoPago": "plin" }
   },
   {
     "id_cliente": 3,
@@ -24,7 +24,7 @@
       { "texto": "Leche de coco", "fecha": "2026-04-03" },
       { "texto": "Sin cafeína", "fecha": "2026-05-01" }
     ],
-    "preferencias": { "metodoPago": "efectivo", "notificaciones": true }
+    "preferencias": { "metodoPago": "efectivo" }
   },
   {
     "id_cliente": 4,
@@ -32,7 +32,7 @@
       { "texto": "Extra hielo", "fecha": "2026-04-05" },
       { "texto": "Con chispas de chocolate", "fecha": "2026-04-05" }
     ],
-    "preferencias": { "metodoPago": "tarjeta", "notificaciones": true }
+    "preferencias": { "metodoPago": "tarjeta" }
   },
   {
     "id_cliente": 5,
@@ -41,7 +41,7 @@
       { "texto": "Leche de almendras", "fecha": "2026-04-06" },
       { "texto": "Sin azúcar", "fecha": "2026-04-22" }
     ],
-    "preferencias": { "metodoPago": "yape", "notificaciones": false }
+    "preferencias": { "metodoPago": "yape" }
   },
   {
     "id_cliente": 6,
@@ -50,7 +50,7 @@
       { "texto": "Extra shot de espresso", "fecha": "2026-04-08" },
       { "texto": "Todo para llevar", "fecha": "2026-04-08" }
     ],
-    "preferencias": { "metodoPago": "efectivo", "notificaciones": true }
+    "preferencias": { "metodoPago": "efectivo" }
   },
   {
     "id_cliente": 7,
@@ -58,7 +58,7 @@
       { "texto": "Leche descremada", "fecha": "2026-04-10" },
       { "texto": "Con sirope de vainilla", "fecha": "2026-04-10" }
     ],
-    "preferencias": { "metodoPago": "plin", "notificaciones": true }
+    "preferencias": { "metodoPago": "plin" }
   },
   {
     "id_cliente": 8,
@@ -67,7 +67,7 @@
       { "texto": "Leche de coco", "fecha": "2026-04-12" },
       { "texto": "Poco hielo", "fecha": "2026-04-28" }
     ],
-    "preferencias": { "metodoPago": "transferencia", "notificaciones": false }
+    "preferencias": { "metodoPago": "transferencia" }
   },
   {
     "id_cliente": 9,
@@ -76,7 +76,7 @@
       { "texto": "Sin azúcar", "fecha": "2026-04-14" },
       { "texto": "Todo para llevar", "fecha": "2026-05-02" }
     ],
-    "preferencias": { "metodoPago": "yape", "notificaciones": true }
+    "preferencias": { "metodoPago": "yape" }
   },
   {
     "id_cliente": 10,
@@ -85,7 +85,7 @@
       { "texto": "Con chispas de chocolate", "fecha": "2026-04-15" },
       { "texto": "Temperatura extra caliente", "fecha": "2026-04-30" }
     ],
-    "preferencias": { "metodoPago": "tarjeta", "notificaciones": true }
+    "preferencias": { "metodoPago": "tarjeta" }
   },
   {
     "id_cliente": 11,
@@ -93,7 +93,7 @@
       { "texto": "Leche de almendras", "fecha": "2026-04-16" },
       { "texto": "Extra shot de espresso", "fecha": "2026-04-16" }
     ],
-    "preferencias": { "metodoPago": "efectivo", "notificaciones": false }
+    "preferencias": { "metodoPago": "efectivo" }
   },
   {
     "id_cliente": 12,
@@ -101,7 +101,7 @@
       { "texto": "Leche descremada", "fecha": "2026-04-17" },
       { "texto": "Sin azúcar", "fecha": "2026-04-17" }
     ],
-    "preferencias": { "metodoPago": "yape", "notificaciones": true }
+    "preferencias": { "metodoPago": "yape" }
   },
   {
     "id_cliente": 13,
@@ -109,14 +109,14 @@
       { "texto": "Leche de coco", "fecha": "2026-04-18" },
       { "texto": "Con sirope de vainilla", "fecha": "2026-04-18" }
     ],
-    "preferencias": { "metodoPago": "plin", "notificaciones": true }
+    "preferencias": { "metodoPago": "plin" }
   },
   {
     "id_cliente": 14,
     "comentarios": [
       { "texto": "Todo para llevar", "fecha": "2026-04-19" }
     ],
-    "preferencias": { "metodoPago": "tarjeta", "notificaciones": false }
+    "preferencias": { "metodoPago": "tarjeta" }
   },
   {
     "id_cliente": 15,
@@ -124,14 +124,14 @@
       { "texto": "Sin cafeína", "fecha": "2026-04-20" },
       { "texto": "Poco hielo", "fecha": "2026-04-20" }
     ],
-    "preferencias": { "metodoPago": "efectivo", "notificaciones": true }
+    "preferencias": { "metodoPago": "efectivo" }
   },
   {
     "id_cliente": 16,
     "comentarios": [
       { "texto": "Extra hielo", "fecha": "2026-04-21" }
     ],
-    "preferencias": { "metodoPago": "transferencia", "notificaciones": false }
+    "preferencias": { "metodoPago": "transferencia" }
   },
   {
     "id_cliente": 17,
@@ -139,7 +139,7 @@
       { "texto": "Alergia a lácteos", "fecha": "2026-04-22" },
       { "texto": "Leche de almendras", "fecha": "2026-04-22" }
     ],
-    "preferencias": { "metodoPago": "yape", "notificaciones": true }
+    "preferencias": { "metodoPago": "yape" }
   },
   {
     "id_cliente": 18,
@@ -147,14 +147,14 @@
       { "texto": "Con chispas de chocolate", "fecha": "2026-04-23" },
       { "texto": "Sin azúcar", "fecha": "2026-04-23" }
     ],
-    "preferencias": { "metodoPago": "plin", "notificaciones": true }
+    "preferencias": { "metodoPago": "plin" }
   },
   {
     "id_cliente": 19,
     "comentarios": [
       { "texto": "Temperatura extra caliente", "fecha": "2026-04-24" }
     ],
-    "preferencias": { "metodoPago": "efectivo", "notificaciones": false }
+    "preferencias": { "metodoPago": "efectivo" }
   },
   {
     "id_cliente": 20,
@@ -162,7 +162,7 @@
       { "texto": "Leche descremada", "fecha": "2026-04-25" },
       { "texto": "Extra shot de espresso", "fecha": "2026-04-25" }
     ],
-    "preferencias": { "metodoPago": "tarjeta", "notificaciones": true }
+    "preferencias": { "metodoPago": "tarjeta" }
   },
   {
     "id_cliente": 21,
@@ -170,14 +170,14 @@
       { "texto": "Leche de coco", "fecha": "2026-04-26" },
       { "texto": "Todo para llevar", "fecha": "2026-04-26" }
     ],
-    "preferencias": { "metodoPago": "yape", "notificaciones": false }
+    "preferencias": { "metodoPago": "yape" }
   },
   {
     "id_cliente": 22,
     "comentarios": [
       { "texto": "Sin cafeína", "fecha": "2026-04-27" }
     ],
-    "preferencias": { "metodoPago": "efectivo", "notificaciones": true }
+    "preferencias": { "metodoPago": "efectivo" }
   },
   {
     "id_cliente": 23,
@@ -185,14 +185,14 @@
       { "texto": "Poco hielo", "fecha": "2026-04-28" },
       { "texto": "Con sirope de vainilla", "fecha": "2026-04-28" }
     ],
-    "preferencias": { "metodoPago": "plin", "notificaciones": true }
+    "preferencias": { "metodoPago": "plin" }
   },
   {
     "id_cliente": 24,
     "comentarios": [
       { "texto": "Extra hielo", "fecha": "2026-04-29" }
     ],
-    "preferencias": { "metodoPago": "transferencia", "notificaciones": false }
+    "preferencias": { "metodoPago": "transferencia" }
   },
   {
     "id_cliente": 25,
@@ -200,14 +200,14 @@
       { "texto": "Leche de almendras", "fecha": "2026-04-30" },
       { "texto": "Sin azúcar", "fecha": "2026-04-30" }
     ],
-    "preferencias": { "metodoPago": "tarjeta", "notificaciones": true }
+    "preferencias": { "metodoPago": "tarjeta" }
   },
   {
     "id_cliente": 26,
     "comentarios": [
       { "texto": "Alergia a lácteos", "fecha": "2026-05-01" }
     ],
-    "preferencias": { "metodoPago": "efectivo", "notificaciones": false }
+    "preferencias": { "metodoPago": "efectivo" }
   },
   {
     "id_cliente": 27,
@@ -215,7 +215,7 @@
       { "texto": "Con chispas de chocolate", "fecha": "2026-05-02" },
       { "texto": "Leche descremada", "fecha": "2026-05-02" }
     ],
-    "preferencias": { "metodoPago": "yape", "notificaciones": true }
+    "preferencias": { "metodoPago": "yape" }
   },
   {
     "id_cliente": 28,
@@ -223,7 +223,7 @@
       { "texto": "Extra shot de espresso", "fecha": "2026-05-03" },
       { "texto": "Todo para llevar", "fecha": "2026-05-03" }
     ],
-    "preferencias": { "metodoPago": "plin", "notificaciones": false }
+    "preferencias": { "metodoPago": "plin" }
   },
   {
     "id_cliente": 29,
@@ -231,14 +231,14 @@
       { "texto": "Temperatura extra caliente", "fecha": "2026-05-04" },
       { "texto": "Sin cafeína", "fecha": "2026-05-04" }
     ],
-    "preferencias": { "metodoPago": "tarjeta", "notificaciones": true }
+    "preferencias": { "metodoPago": "tarjeta" }
   },
   {
     "id_cliente": 30,
     "comentarios": [
       { "texto": "Leche de coco", "fecha": "2026-05-05" }
     ],
-    "preferencias": { "metodoPago": "efectivo", "notificaciones": true }
+    "preferencias": { "metodoPago": "efectivo" }
   },
   {
     "id_cliente": 31,
@@ -246,7 +246,7 @@
       { "texto": "Poco hielo", "fecha": "2026-05-06" },
       { "texto": "Con sirope de vainilla", "fecha": "2026-05-06" }
     ],
-    "preferencias": { "metodoPago": "yape", "notificaciones": false }
+    "preferencias": { "metodoPago": "yape" }
   },
   {
     "id_cliente": 32,
@@ -254,14 +254,14 @@
       { "texto": "Sin azúcar", "fecha": "2026-05-07" },
       { "texto": "Leche de almendras", "fecha": "2026-05-07" }
     ],
-    "preferencias": { "metodoPago": "transferencia", "notificaciones": true }
+    "preferencias": { "metodoPago": "transferencia" }
   },
   {
     "id_cliente": 33,
     "comentarios": [
       { "texto": "Extra hielo", "fecha": "2026-05-08" }
     ],
-    "preferencias": { "metodoPago": "plin", "notificaciones": true }
+    "preferencias": { "metodoPago": "plin" }
   },
   {
     "id_cliente": 34,
@@ -269,14 +269,14 @@
       { "texto": "Alergia a lácteos", "fecha": "2026-05-09" },
       { "texto": "Leche de coco", "fecha": "2026-05-09" }
     ],
-    "preferencias": { "metodoPago": "efectivo", "notificaciones": false }
+    "preferencias": { "metodoPago": "efectivo" }
   },
   {
     "id_cliente": 35,
     "comentarios": [
       { "texto": "Con chispas de chocolate", "fecha": "2026-05-10" }
     ],
-    "preferencias": { "metodoPago": "tarjeta", "notificaciones": true }
+    "preferencias": { "metodoPago": "tarjeta" }
   },
   {
     "id_cliente": 36,
@@ -284,7 +284,7 @@
       { "texto": "Extra shot de espresso", "fecha": "2026-05-11" },
       { "texto": "Todo para llevar", "fecha": "2026-05-11" }
     ],
-    "preferencias": { "metodoPago": "yape", "notificaciones": true }
+    "preferencias": { "metodoPago": "yape" }
   },
   {
     "id_cliente": 37,
@@ -292,14 +292,14 @@
       { "texto": "Leche descremada", "fecha": "2026-05-12" },
       { "texto": "Sin cafeína", "fecha": "2026-05-12" }
     ],
-    "preferencias": { "metodoPago": "plin", "notificaciones": false }
+    "preferencias": { "metodoPago": "plin" }
   },
   {
     "id_cliente": 38,
     "comentarios": [
       { "texto": "Temperatura extra caliente", "fecha": "2026-05-13" }
     ],
-    "preferencias": { "metodoPago": "efectivo", "notificaciones": true }
+    "preferencias": { "metodoPago": "efectivo" }
   },
   {
     "id_cliente": 39,
@@ -307,7 +307,7 @@
       { "texto": "Poco hielo", "fecha": "2026-05-14" },
       { "texto": "Sin azúcar", "fecha": "2026-05-14" }
     ],
-    "preferencias": { "metodoPago": "transferencia", "notificaciones": true }
+    "preferencias": { "metodoPago": "transferencia" }
   },
   {
     "id_cliente": 40,
@@ -315,14 +315,14 @@
       { "texto": "Con sirope de vainilla", "fecha": "2026-05-15" },
       { "texto": "Leche de almendras", "fecha": "2026-05-15" }
     ],
-    "preferencias": { "metodoPago": "tarjeta", "notificaciones": false }
+    "preferencias": { "metodoPago": "tarjeta" }
   },
   {
     "id_cliente": 41,
     "comentarios": [
       { "texto": "Extra hielo", "fecha": "2026-05-16" }
     ],
-    "preferencias": { "metodoPago": "yape", "notificaciones": true }
+    "preferencias": { "metodoPago": "yape" }
   },
   {
     "id_cliente": 42,
@@ -330,7 +330,7 @@
       { "texto": "Alergia a lácteos", "fecha": "2026-05-17" },
       { "texto": "Sin cafeína", "fecha": "2026-05-17" }
     ],
-    "preferencias": { "metodoPago": "efectivo", "notificaciones": true }
+    "preferencias": { "metodoPago": "efectivo" }
   },
   {
     "id_cliente": 43,
@@ -338,7 +338,7 @@
       { "texto": "Leche de coco", "fecha": "2026-05-18" },
       { "texto": "Con chispas de chocolate", "fecha": "2026-05-18" }
     ],
-    "preferencias": { "metodoPago": "plin", "notificaciones": false }
+    "preferencias": { "metodoPago": "plin" }
   },
   {
     "id_cliente": 44,
@@ -346,14 +346,14 @@
       { "texto": "Todo para llevar", "fecha": "2026-05-19" },
       { "texto": "Extra shot de espresso", "fecha": "2026-05-19" }
     ],
-    "preferencias": { "metodoPago": "tarjeta", "notificaciones": true }
+    "preferencias": { "metodoPago": "tarjeta" }
   },
   {
     "id_cliente": 45,
     "comentarios": [
       { "texto": "Sin azúcar", "fecha": "2026-05-20" }
     ],
-    "preferencias": { "metodoPago": "efectivo", "notificaciones": true }
+    "preferencias": { "metodoPago": "efectivo" }
   },
   {
     "id_cliente": 46,
@@ -361,7 +361,7 @@
       { "texto": "Leche descremada", "fecha": "2026-05-21" },
       { "texto": "Poco hielo", "fecha": "2026-05-21" }
     ],
-    "preferencias": { "metodoPago": "yape", "notificaciones": false }
+    "preferencias": { "metodoPago": "yape" }
   },
   {
     "id_cliente": 47,
@@ -369,14 +369,14 @@
       { "texto": "Temperatura extra caliente", "fecha": "2026-05-22" },
       { "texto": "Sin cafeína", "fecha": "2026-05-22" }
     ],
-    "preferencias": { "metodoPago": "transferencia", "notificaciones": true }
+    "preferencias": { "metodoPago": "transferencia" }
   },
   {
     "id_cliente": 48,
     "comentarios": [
       { "texto": "Con sirope de vainilla", "fecha": "2026-05-23" }
     ],
-    "preferencias": { "metodoPago": "plin", "notificaciones": true }
+    "preferencias": { "metodoPago": "plin" }
   },
   {
     "id_cliente": 49,
@@ -384,7 +384,7 @@
       { "texto": "Extra hielo", "fecha": "2026-05-24" },
       { "texto": "Leche de almendras", "fecha": "2026-05-24" }
     ],
-    "preferencias": { "metodoPago": "tarjeta", "notificaciones": false }
+    "preferencias": { "metodoPago": "tarjeta" }
   },
   {
     "id_cliente": 50,
@@ -393,6 +393,6 @@
       { "texto": "Todo para llevar", "fecha": "2026-05-25" },
       { "texto": "Sin azúcar", "fecha": "2026-05-25" }
     ],
-    "preferencias": { "metodoPago": "efectivo", "notificaciones": true }
+    "preferencias": { "metodoPago": "efectivo" }
   }
 ]
