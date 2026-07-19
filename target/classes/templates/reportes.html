@@ -83,8 +83,6 @@ tbody tr:hover { background: rgba(193,101,47,.06); }
 .badge { display: inline-block; padding: .25rem .7rem; border-radius: 20px; font-size: .68rem; font-weight: 700; text-transform: uppercase; letter-spacing: .3px; }
 .b-pg { background: rgba(38,56,46,.12); color: var(--verde-oscuro); border: 1px solid var(--verde-oscuro); }
 .b-mg { background: rgba(191,217,195,.3); color: #2a6040; border: 1px solid var(--verde-claro); }
-.b-pg-hero { background: rgba(191,217,195,.15); color: var(--crema); border: 1px solid var(--verde-claro); }
-.b-mg-hero { background: rgba(191,217,195,.15); color: var(--verde-claro); border: 1px solid var(--verde-claro); }
 .b-ok { background: rgba(76,175,80,.15); color: #2e7d32; border: 1px solid #4caf50; }
 .b-no { background: rgba(229,57,53,.12); color: #c62828; border: 1px solid #e53935; }
 
@@ -97,11 +95,10 @@ tbody tr:hover { background: rgba(193,101,47,.06); }
 .flow-arrow { text-align: center; color: var(--terracota); font-size: .95rem; font-weight: 700; padding: .1rem 0; }
 
 /* FOOTER */
-.foot-v6 { background: var(--cafe-oscuro); border-top: 1px solid var(--linea-footer); padding: 1.8rem 2rem; margin-top: auto; }
-.foot-v6-inner { max-width: 600px; margin: 0 auto; text-align: center; display: flex; flex-direction: column; align-items: center; gap: .5rem; }
-.foot-v6-brand { font-family: 'Playfair Display', serif; font-weight: 700; color: var(--crema); font-size: .95rem; letter-spacing: 1px; text-transform: uppercase; }
-.foot-v6-brand span { color: var(--terracota-suave); }
-.foot-v6-sub { color: rgba(245,241,233,.5); font-size: .8rem; }
+.site-footer{background:#2C1B0E;border-top:1px solid rgba(255,255,255,.1);padding:1.6rem 2rem;margin-top:auto;text-align:center}
+.site-footer-brand{font-family:'Playfair Display',Georgia,serif;font-size:1.05rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#F5F1E9}
+.site-footer-brand span{color:#E8935F}
+.site-footer-sub{margin-top:.35rem;font-size:.78rem;color:rgba(245,241,233,.5)}
 
 @media (max-width: 768px) {
   .two-col { grid-template-columns: 1fr; }
@@ -145,8 +142,8 @@ tbody tr:hover { background: rgba(193,101,47,.06); }
       <small>BRUMA Cafetería — Integración PostgreSQL + MongoDB</small>
     </div>
     <div style="display:flex;gap:.5rem;align-items:center">
-      <span class="badge b-pg-hero">PostgreSQL</span>
-      <span class="badge b-mg-hero">MongoDB</span>
+      <span class="badge b-pg">PostgreSQL</span>
+      <span class="badge b-mg">MongoDB</span>
     </div>
   </div>
 </div>
@@ -261,11 +258,9 @@ tbody tr:hover { background: rgba(193,101,47,.06); }
   </div>
 </div>
 
-<footer class="foot-v6">
-  <div class="foot-v6-inner">
-    <span class="foot-v6-brand">BRUMA <span>Cafetería</span></span>
-    <span class="foot-v6-sub">Sistema de Gestión Dual DB · © 2025</span>
-  </div>
+<footer class="site-footer">
+  <p class="site-footer-brand">BRUMA <span>CAFETERÍA</span></p>
+  <p class="site-footer-sub">Sistema de Gestión Dual DB · © 2025</p>
 </footer>
 </body>
 </html>
