@@ -93,13 +93,12 @@ tbody tr:hover { background: rgba(193,101,47,.06); }
 .ripple { position: absolute; background: rgba(255,255,255,.5); border-radius: 50%; transform: scale(0); animation: rippleEffect .6s linear; pointer-events: none; }
 
 /* FORM CARD */
-.form-card { background: white; border: 1px solid rgba(0,0,0,.05); border-radius: 18px; padding: 2rem; max-width: 600px; box-shadow: 0 10px 30px rgba(0,0,0,.1); margin-bottom: 2rem; animation: aparecer .4s ease; }
+.form-card { background: white; border: 1px solid rgba(0,0,0,.05); border-radius: 18px; padding: 2rem; max-width: 600px; margin: 0 auto 2rem; box-shadow: 0 10px 30px rgba(0,0,0,.1); animation: aparecer .4s ease; }
 .form-card h3 { color: var(--verde-oscuro); margin-bottom: 1.4rem; font-size: 1.1rem; font-weight: 700; }
 .fg { margin-bottom: 1.2rem; }
 .fg label { display: block; margin-bottom: .4rem; color: var(--marron); font-size: .78rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; }
 .fg input, .fg select, .fg textarea { width: 100%; padding: .8rem 1rem; background: var(--crema); border: 1.5px solid var(--crema-calida); border-radius: 10px; color: var(--cafe-oscuro); font-size: .93rem; outline: none; transition: all .25s; font-family: inherit; }
 .fg input:focus, .fg select:focus, .fg textarea:focus { border-color: var(--terracota-suave); box-shadow: 0 0 0 3px rgba(193,101,47,.15); background: white; }
-.fg select option { background: var(--crema); color: var(--cafe-oscuro); padding: .5rem; }
 .row { display: flex; gap: 1rem; margin-top: 1.4rem; }
 
 /* BADGES */
@@ -111,10 +110,11 @@ tbody tr:hover { background: rgba(193,101,47,.06); }
 .precio { color: #2a6040; font-weight: 800; }
 
 /* FOOTER */
-.site-footer{background:#2C1B0E;border-top:1px solid rgba(255,255,255,.1);padding:1.6rem 2rem;margin-top:auto;text-align:center}
-.site-footer-brand{font-family:'Playfair Display',Georgia,serif;font-size:1.05rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#F5F1E9}
-.site-footer-brand span{color:#E8935F}
-.site-footer-sub{margin-top:.35rem;font-size:.78rem;color:rgba(245,241,233,.5)}
+.foot-v6 { background: var(--cafe-oscuro); border-top: 1px solid var(--linea-footer); padding: 1.8rem 2rem; margin-top: auto; }
+.foot-v6-inner { max-width: 600px; margin: 0 auto; text-align: center; display: flex; flex-direction: column; align-items: center; gap: .5rem; }
+.foot-v6-brand { font-family: 'Playfair Display', serif; font-weight: 700; color: var(--crema); font-size: .95rem; letter-spacing: 1px; text-transform: uppercase; }
+.foot-v6-brand span { color: var(--terracota-suave); }
+.foot-v6-sub { color: rgba(245,241,233,.5); font-size: .8rem; }
 
 @media (max-width: 768px) {
   nav { padding: 0 1rem; gap: .3rem; height: auto; flex-wrap: wrap; padding-block: .6rem; }
@@ -245,9 +245,11 @@ tbody tr:hover { background: rgba(193,101,47,.06); }
   </div>
 </div>
 
-<footer class="site-footer">
-  <p class="site-footer-brand">BRUMA <span>CAFETERÍA</span></p>
-  <p class="site-footer-sub">Sistema de Gestión Dual DB · © 2025</p>
+<footer class="foot-v6">
+  <div class="foot-v6-inner">
+    <span class="foot-v6-brand">BRUMA <span>Cafetería</span></span>
+    <span class="foot-v6-sub">Sistema de Gestión Dual DB · © 2025</span>
+  </div>
 </footer>
 
 <script>
