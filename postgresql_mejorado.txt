@@ -419,10 +419,11 @@ FROM detalle_pedido d
 INNER JOIN productos pr ON pr.id_producto = d.id_producto
 WHERE pr.descripcion LIKE '%chocolate%';
 
--- 6. Usuarios del sistema cuyo rol contiene 'ADMIN'
-SELECT u.username, u.nombre, u.rol
-FROM usuarios u
-WHERE u.rol LIKE '%ADMIN%';
+-- 6. Productos de categoría 'Bebidas Calientes' que aparecen en algún pedido 
+SELECT pr.nombre, pr.precio 
+FROM productos pr 
+INNER JOIN detalle_pedido d ON d.id_producto = pr.id_producto 
+WHERE pr.categoria LIKE '%Calientes%'; 
 
 -- 7. Pedidos de clientes cuyo nombre contiene 'Ruiz'
 SELECT c.nombre AS cliente, p.id_pedido, p.total
