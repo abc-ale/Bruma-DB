@@ -389,10 +389,6 @@ INSERT INTO detalle_pedido (id_pedido, id_producto, cantidad, subtotal) VALUES
 
 SELECT * FROM detalle_pedido;
 
-INSERT INTO usuarios (username, password, rol, nombre) VALUES
-  ('admin',  '$2a$10$N.zmdr9k7uOCQb376NoUnuTJ8iAt6Z5EHsM8lE9lBOsl7iAt6Z', 'ROLE_ADMIN',  'Administrador'),
-  ('cajero', '$2a$10$N.zmdr9k7uOCQb376NoUnuTJ8iAt6Z5EHsM8lE9lBOsl7iAt6Z', 'ROLE_CAJERO', 'Cajero Principal');
-
 -- 1. Pedidos de clientes cuyo nombre empieza con 'María'
 SELECT p.id_pedido, c.nombre AS cliente, p.total
 FROM pedidos p
